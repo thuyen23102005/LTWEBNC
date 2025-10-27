@@ -1,0 +1,46 @@
+node_modules/
+# Thư mục build
+bin/
+obj/
+
+# File và thư mục người dùng
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Cấu hình Visual Studio
+.vs/
+
+# Thư mục xuất bản
+publish/
+out/
+
+# Logs
+*.log
+
+# Tạm
+*.tmp
+*.temp
+
+# Backup
+*.bak
+
+# Dữ liệu hệ điều hành
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Nơi chứa thư viện phía client (nếu có)
+node_modules/
+wwwroot/lib/
+
+# Các gói NuGet đã restore
+*.nupkg
+packages/
+project.lock.json
+
+# Khác
+*.dll
+*.pdb
+*.exe
