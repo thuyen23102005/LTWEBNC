@@ -15,6 +15,16 @@ namespace FoodsStore.Repository
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            // Ngắt cascade delete giữa Item và SubCategory
+            modelBuilder.Entity<Item>()
+                .HasOne(i => i.SubCategory)
+                .WithMany()
+                .HasForeignKey(i => i.SubCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }
