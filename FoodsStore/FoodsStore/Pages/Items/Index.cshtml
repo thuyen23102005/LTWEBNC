@@ -1,0 +1,26 @@
+﻿@page
+@model FoodsStore.Pages.Items.IndexModel
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    @foreach (var item in Model.Items)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>@item.Title</h5>
+                    <p>@item.Description</p>
+                    <p><b>@item.Price.ToString("C")</b></p>
+                    <form method="post" asp-page="/Cart/Add">
+                        <input type="hidden" name="ItemId" value="@item.Id" />
+                        <button class="btn btn-primary">Thêm vào giỏ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

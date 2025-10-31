@@ -1,5 +1,9 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\items\banh_mi.png
+wwwroot\images\items\cart_empty.png
+wwwroot\images\items\mi_tron.png
+wwwroot\images\items\nestle_milo.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map

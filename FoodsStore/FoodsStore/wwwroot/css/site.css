@@ -16,3 +16,35 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* ===== Cart page (scoped) ===== */
+.cart-page .empty-cart {
+    min-height: 60vh;
+    justify-content: center;
+}
+
+.cart-page .empty-illustration {
+    max-width: 280px;
+    height: auto;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.08));
+}
+
+.cart-page .btn {
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+    .cart-page .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(13,110,253,.15);
+    }
+
+.cart-page .table td,
+.cart-page .table th {
+    vertical-align: middle;
+}
+
+@media (max-width: 576px) {
+    .cart-page .empty-illustration {
+        max-width: 220px;
+    }
+}
