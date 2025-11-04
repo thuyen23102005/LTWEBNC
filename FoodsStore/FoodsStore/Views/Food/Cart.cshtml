@@ -1,0 +1,23 @@
+﻿@model List<FoodsStore.Models.FoodItem>
+
+<div class="container py-4">
+    <h2>🛒 Giỏ hàng của bạn</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Món ăn</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("N0") VNĐ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h4 class="text-end">Tổng: @Model.Sum(i => i.Price).ToString("N0") VNĐ</h4>
+</div>

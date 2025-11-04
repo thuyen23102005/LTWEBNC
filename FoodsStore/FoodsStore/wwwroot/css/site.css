@@ -16,3 +16,135 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* B?ng màu ðý?c áp d?ng (?m Cúng & Tin C?y):
+   Primary: #FF8A00 (Cam R?c R? - CTA)
+   Secondary: #3C6E71 (Xanh L?c B?o Ð?m - Header/N?n ph?)
+   Accent: #E5383B (Ð? Ð?t - Gi?m giá/Nh?n m?nh)
+   Background: #F7F7F7 (Xám Nh?t Siêu Sáng)
+   Text: #282C34 (Xám Ðen Sâu)
+*/
+
+/* ?? N?n t?ng th? */
+body {
+    /* N?n Xám Nh?t Siêu Sáng */
+    background-color: #F7F7F7;
+    font-family: 'Segoe UI', sans-serif;
+    color: #282C34; /* Màu ch? Xám Ðen Sâu */
+}
+
+/* ?? Header */
+.header-bar {
+    /* Dùng màu Secondary #3C6E71 cho thanh Header ð? t?o s? chuyên nghi?p */
+    background-color: #3C6E71;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Bóng ð? nh? nhàng */
+    box-shadow: 0 4px 6px rgba(40, 44, 52, 0.1);
+}
+
+/* ?? Ô qu?ng cáo (Banner) */
+.banner-box {
+    /* N?n tr?ng (ho?c có th? gi? #F7F7F7) */
+    background-color: white;
+    /* Vi?n Cam R?c R? #FF8A00 t?o s? ngon mi?ng */
+    border: 2px dashed #FF8A00;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem auto;
+    text-align: center;
+    color: #282C34;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* ?? Card món ãn */
+.card {
+    /* Card n?n tr?ng tinh ð? n?i b?t trên n?n #F7F7F7 */
+    background-color: white;
+    /* Vi?n Secondary #3C6E71 */
+    border: 1px solid #3C6E71;
+    /* Bóng ð? nh? */
+    box-shadow: 0 4px 8px rgba(40, 44, 52, 0.05);
+    transition: transform 0.3s ease;
+    border-radius: 12px;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        /* Bóng ð? Cam R?c R? khi hover */
+        box-shadow: 0 6px 12px rgba(255, 138, 0, 0.2);
+    }
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    /* D?i phân cách Cam R?c R? */
+    border-bottom: 2px solid #FF8A00;
+}
+
+.card-title {
+    font-weight: 700;
+    color: #282C34;
+}
+
+.card-text {
+    font-weight: 500;
+    color: #282C34;
+}
+
+/* ?? Nút ð?t món (Nút chính - CTA) */
+.btn-success {
+    /* Dùng màu Primary #FF8A00 (Cam R?c R?) cho nút CTA */
+    background-color: #FF8A00;
+    border-color: #FF8A00;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+    .btn-success:hover {
+        /* Màu t?i hõn khi hover */
+        background-color: #E57D00;
+        border-color: #E57D00;
+        color: white;
+    }
+
+/* ?? Nút ðãng nh?p/ðãng k? (Nút ph? trên Header) */
+.btn-outline-light {
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+    .btn-outline-light:hover {
+        background-color: white;
+        /* Ch? màu Xanh L?c B?o Ð?m khi hover */
+        color: #3C6E71;
+    }
+
+/* ?? Tiêu ð? trang */
+.section-title {
+    text-align: center;
+    margin: 2rem 0 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    /* Dùng màu Text #282C34 ho?c Secondary #3C6E71 */
+    color: #3C6E71;
+}
+
+/* ?? Scroll n?i dung */
+.scrollable-content {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}

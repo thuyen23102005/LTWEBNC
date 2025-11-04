@@ -1,0 +1,29 @@
+﻿@model List<FoodsStore.Models.FoodItem>
+
+<!-- Quảng cáo -->
+<div class="container mt-3">
+    <div style="background-color:#ffeeba; padding:20px; border-radius:8px; text-align:center;">
+        <h4>🎉 Khuyến mãi đặc biệt hôm nay: Giảm 20% cho đơn hàng trên 200.000 VNĐ!</h4>
+    </div>
+</div>
+
+<!-- Thực đơn -->
+<div class="container py-4">
+    <h2 class="text-center mb-4">Thực đơn hôm nay</h2>
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" />
+                    <div class="card-body">
+                        <h5>@item.Name</h5>
+                        <p>@item.Description</p>
+                        <p class="text-success fw-bold">@item.Price.ToString("N0") VNĐ</p>
+                        <a href="@Url.Action("Details", "Food", new { id = item.Id })" class="btn btn-success w-100">Đặt ngay</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
