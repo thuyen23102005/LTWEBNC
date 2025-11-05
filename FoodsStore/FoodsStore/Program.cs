@@ -1,4 +1,4 @@
-using FoodsStore.Repository;
+﻿using FoodsStore.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FoodsStore.Models;
@@ -20,8 +20,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.Name = ".FoodsStore.Session";
     options.Cookie.HttpOnly = true;
-    options.IdleTimeout = TimeSpan.FromHours(12);
     options.Cookie.IsEssential = true;
 });
 

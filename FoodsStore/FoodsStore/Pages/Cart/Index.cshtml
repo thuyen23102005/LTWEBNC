@@ -58,32 +58,33 @@
                                                 <input class="form-check-input" type="checkbox" checked />
                                             </td>
                                             <td class="d-flex align-items-center gap-3">
-                                                <img src="~/images/items/@(l.ItemId).png"
-                                                     onerror="this.src='@Url.Content("~/images/placeholder.png")';"
-                                                     class="rounded" style="width:56px;height:56px;object-fit:cover;" alt="item" />
+                                                <img src="@Url.Content(l.ImageUrl ?? $"/images/items/{l.ItemId}.png")"
+                                                     onerror="this.onerror=null;this.src='/images/placeholder.png';"
+                                                     style="width:56px;height:56px;object-fit:cover" class="rounded" alt="@l.Title" />
                                                 <div class="fw-semibold">@l.Title</div>
                                             </td>
                                             <td class="text-end">@Model.ToCurrency(l.Price)</td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
                                                     <form method="post" asp-page-handler="Update">
+                                                        @Html.AntiForgeryToken()
                                                         <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                        <input type="hidden" name="count" value="@(l.Count - 1)" />
-                                                        <button class="btn btn-outline-secondary px-2" @(l.Count <= 1 ? "disabled" : "")>-</button>
+                                                        <input type="hidden" name="count" value="@(Math.Max(1, l.Count - 1))" />
+                                                        <button class="btn btn-outline-secondary btn-sm" @(l.Count <= 1 ? "disabled" : "")>-</button>
                                                     </form>
-                                                    <input type="number" min="1" class="form-control text-center"
-                                                           style="width:64px;border-left:0;border-right:0;"
-                                                           value="@l.Count"
-                                                           onkeydown="return event.key!=='Enter';"
-                                                           onchange="document.getElementById('qty-@l.ItemId').value=this.value; document.getElementById('form-@l.ItemId').submit();" />
-                                                    <form id="form-@l.ItemId" method="post" asp-page-handler="Update">
-                                                        <input type="hidden" id="qty-@l.ItemId" name="count" value="@l.Count" />
-                                                        <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                    </form>
+                                                    
                                                     <form method="post" asp-page-handler="Update">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="itemId" value="@l.ItemId" />
+                                                        <input type="number" name="count" min="1" value="@l.Count"
+                                                               class="form-control form-control-sm text-center" style="width:60px" />
+                                                    </form>
+
+                                                    <form method="post" asp-page-handler="Update">
+                                                        @Html.AntiForgeryToken()
                                                         <input type="hidden" name="itemId" value="@l.ItemId" />
                                                         <input type="hidden" name="count" value="@(l.Count + 1)" />
-                                                        <button class="btn btn-outline-secondary px-2">+</button>
+                                                        <button class="btn btn-outline-secondary btn-sm">+</button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -92,6 +93,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <form method="post" asp-page-handler="Delete">
+                                                    @Html.AntiForgeryToken()
                                                     <input type="hidden" name="itemId" value="@l.ItemId" />
                                                     <button class="btn btn-sm btn-danger">Xóa</button>
                                                 </form>

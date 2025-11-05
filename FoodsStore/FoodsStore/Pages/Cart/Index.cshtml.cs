@@ -58,7 +58,10 @@ namespace FoodsStore.Pages.Cart
                     ItemId = r.ItemId,
                     Title = r.Item?.Title ?? "",
                     Price = r.Item?.Price ?? 0,
-                    Count = r.Count
+                    Count = r.Count,
+                    ImageUrl = !string.IsNullOrEmpty(r.Item!.ImageUrl)
+                    ? r.Item.ImageUrl
+                    : "/images/placeholder.png"
                 }).ToList();
 
                 return;
@@ -67,6 +70,34 @@ namespace FoodsStore.Pages.Cart
             // 2) Chưa đăng nhập => lấy từ Session
             var sess = HttpContext.Session.GetJson<List<CartLineVM>>("cart_guest") ?? new List<CartLineVM>();
             Lines = sess;
+
+            // ===== DEMO: nếu giỏ khách đang trống thì thêm vài item mẫu để test UI =====
+            if (sess.Count == 0)
+            {
+                sess.Add(new CartLineVM
+                {
+                    ItemId = 1,
+                    Title = "Mì trộn sa tế",
+                    Price = 10000,
+                    Count = 1,
+                    ImageUrl = "~/images/items/mi_tron.png"
+                });
+                sess.Add(new CartLineVM
+                {
+                    ItemId = 3,
+                    Title = "Trà chanh mát lạnh",
+                    Price = 12000,
+                    Count = 2,
+                    ImageUrl = "~/images/items/nestle_milo.png"
+                });
+
+                // lưu lại vào Session để trang reload vẫn còn
+                HttpContext.Session.SetJson("cart_guest", sess);
+            }
+
+            // gán ra View
+            Lines = sess;
+            return;
         }
 
         // Xóa một dòng (áp dụng cho cả DB và Session)
@@ -112,12 +143,12 @@ namespace FoodsStore.Pages.Cart
             }
             else
             {
-                var sess = HttpContext.Session.GetJson<List<CartLineVM>>("cart_guest") ?? new List<CartLineVM>();
+                var sess = HttpContext.Session.GetJson<List<CartLineVM>>("cart_guest") ?? new();
                 var line = sess.FirstOrDefault(x => x.ItemId == itemId);
                 if (line != null)
                 {
                     line.Count = count;
-                    HttpContext.Session.SetJson("cart_guest", sess);
+                    HttpContext.Session.SetJson("cart_guest", sess); // PHẢI set lại
                 }
             }
             return RedirectToPage();
