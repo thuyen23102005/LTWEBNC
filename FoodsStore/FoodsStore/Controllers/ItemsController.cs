@@ -49,7 +49,7 @@ namespace FoodsStore.Controllers
             {
                 if (vm.ImageUrl != null && vm.ImageUrl.Length > 0) 
                 {
-                    var uploadDir = @"Images";
+                    var uploadDir = @"images";
                     var filename = Guid.NewGuid().ToString() + "-" + vm.ImageUrl.FileName;
                     var path = Path.Combine(_environment.WebRootPath, uploadDir, filename);
                     await vm.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
