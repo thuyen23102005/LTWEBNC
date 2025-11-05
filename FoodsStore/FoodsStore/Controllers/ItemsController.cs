@@ -23,7 +23,7 @@ namespace FoodsStore.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var items = _context.Items.Include(x=>x.Category).Include(y=>y.SubCategory).ToList();
+            var items = _context.Items.Include(x=>x.Category).ToList();
             return View();
         }
         [HttpGet]
@@ -40,12 +40,6 @@ namespace FoodsStore.Controllers
             
 
             return View(vm);
-        }
-        [HttpGet]
-        public IActionResult GetSubcategory(int id)
-        {
-            var subCategory = _context.SubCategories.Where(x => x.CategoryId == id).FirstOrDefault();
-            return Json(subCategory);
         }
     }
 }
