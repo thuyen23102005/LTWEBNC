@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<FoodsStore.Models.ViewModels.CategoryViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Quản lý loại sản phẩm";
 }
 
-<h1>Index</h1>
+<h1>Danh Mục Loại Sản Phẩm</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

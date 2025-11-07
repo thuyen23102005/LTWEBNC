@@ -1,5 +1,8 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\banana.jpg
+wwwroot\images\c32bfd0c-ef53-4cd3-8cce-f2c2a42eb817-banana.png
+wwwroot\images\f7003149-eb20-44f6-a14c-dc79024e65bc-banh_bao_meaty.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -58,3 +61,4 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\images\215a32d3-b003-4cf8-9432-c544ada0394c-banana.png

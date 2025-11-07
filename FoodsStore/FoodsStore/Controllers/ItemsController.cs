@@ -28,7 +28,8 @@ namespace FoodsStore.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     Price = model.Price,
-                    CategoryId = model.CategoryId
+                    CategoryId = model.CategoryId,
+                    ImagePath = model.Image
                 })
                 .ToList();
             return View(items);
@@ -65,6 +66,89 @@ namespace FoodsStore.Controllers
             }
 
             return View(vm);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var item = _context.Items.Find(id);
+            if (item == null)
+                return NotFound();
+
+            var vm = new ItemViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Description = item.Description,
+                Price = item.Price,
+                CategoryId = item.CategoryId,
+                ImagePath = item.Image
+            };
+
+            ViewBag.Category = new SelectList(_context.Categories, "Id", "Title", item.CategoryId);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ItemViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Category = new SelectList(_context.Categories, "Id", "Title", vm.CategoryId);
+                return View(vm);
+            }
+
+            var item = _context.Items.Find(vm.Id);
+            if (item == null)
+                return NotFound();
+
+            item.Title = vm.Title;
+            item.Description = vm.Description;
+            item.Price = vm.Price;
+            item.CategoryId = vm.CategoryId;
+
+            // Nếu có upload ảnh mới
+            if (vm.ImageUrl != null && vm.ImageUrl.Length > 0)
+            {
+                // Xóa ảnh cũ an toàn
+                if (!string.IsNullOrEmpty(item.Image))
+                {
+                    var oldPath = Path.Combine(_environment.WebRootPath, item.Image.TrimStart('/'));
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        // Giải phóng file đang bị giữ trước khi xóa
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        System.IO.File.Delete(oldPath);
+                    }
+                }
+
+                // Lưu ảnh mới
+                var uploadDir = "images";
+                var filename = Guid.NewGuid().ToString() + "-" + vm.ImageUrl.FileName;
+                var path = Path.Combine(_environment.WebRootPath, uploadDir, filename);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await vm.ImageUrl.CopyToAsync(stream);
+                }
+
+                item.Image = "/" + uploadDir + "/" + filename;
+            }
+
+            _context.Update(item);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var item = _context.Items.FirstOrDefault(x => x.Id == id);
+            if (item != null)
+            {
+                _context.Items.Remove(item);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -6,6 +6,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public IFormFile ImageUrl { get; set; }
+        public string? ImagePath { get; set; }
         public double Price { get; set; }
         public int CategoryId { get; set; }       
     }
