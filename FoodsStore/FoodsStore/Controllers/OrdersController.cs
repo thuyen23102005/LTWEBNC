@@ -14,12 +14,24 @@ namespace FoodsStore.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var orders = _context.OrderHeaders
+            int pageSize = 10; // số đơn hàng mỗi trang
+
+            var ordersQuery = _context.OrderHeaders
                 .Include(o => o.ApplicationUser)
-                .OrderByDescending(o => o.OrderDate)
+                .OrderByDescending(o => o.OrderDate);
+
+            int totalOrders = ordersQuery.Count();
+            int totalPages = (int)Math.Ceiling(totalOrders / (double)pageSize);
+
+            var orders = ordersQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
 
             return View(orders);
         }

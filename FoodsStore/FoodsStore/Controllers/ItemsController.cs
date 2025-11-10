@@ -2,6 +2,7 @@
 using FoodsStore.Models.ViewModels;
 using FoodsStore.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -19,9 +20,10 @@ namespace FoodsStore.Controllers
             _environment = environment;
         }
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var items = _context.Items.Include(x=>x.Category)
+            int pageSize = 5; // số sản phẩm mỗi trang
+            var items = _context.Items.Include(x => x.Category)
                 .Select(model => new ItemViewModel()
                 {
                     Id = model.Id,
@@ -30,9 +32,22 @@ namespace FoodsStore.Controllers
                     Price = model.Price,
                     CategoryId = model.CategoryId,
                     ImagePath = model.Image
-                })
+                });
+            // Tính toán số lượng trang
+            int totalItems = items.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            // Lấy danh sách theo trang hiện tại
+            var pagedItems = items
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
-            return View(items);
+
+            // Truyền thông tin phân trang qua ViewBag
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+            return View(pagedItems);
         }
         [HttpGet]
         public IActionResult Create()
