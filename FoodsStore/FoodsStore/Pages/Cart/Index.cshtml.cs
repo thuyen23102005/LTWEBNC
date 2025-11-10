@@ -23,24 +23,11 @@ namespace FoodsStore.Pages.Cart
 
         public List<CartLineVM> Lines { get; set; } = new();
         public double SubTotal => Lines.Sum(l => l.LineTotal);
-        public double Discount { get; set; } = 0; // sẽ cập nhật khi áp mã
-        public double GrandTotal => Math.Max(0, SubTotal - Discount);
+        public double GrandTotal => Math.Max(0, SubTotal);
 
         // Định dạng VND nhanh gọn
         public string ToCurrency(double amount) =>
             string.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:c0}", amount);
-
-        // (tùy chọn) handler áp mã giảm giá – demo giảm 10%
-        public IActionResult OnPostApplyCoupon(string coupon)
-        {
-            // ở demo: nếu nhập WELCOME10 => giảm 10%
-            if (!string.IsNullOrWhiteSpace(coupon) && coupon.Trim().ToUpper() == "WELCOME10")
-            {
-                // lưu tạm vào TempData để show (hoặc có thể lưu Session)
-                TempData["couponApplied"] = "WELCOME10";
-            }
-            return RedirectToPage();
-        }
 
         public async Task OnGetAsync()
         {
@@ -152,6 +139,33 @@ namespace FoodsStore.Pages.Cart
                 }
             }
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostCheckoutAsync()
+        {
+            // Lấy user hiện tại (nếu đã đăng nhập) để xóa giỏ trong DB
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var rows = await _context.Carts
+                    .Where(c => c.ApplicationUserId == userId)
+                    .ToListAsync();
+
+                _context.Carts.RemoveRange(rows);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Khách vãng lai: xóa giỏ trong Session
+                HttpContext.Session.Remove("cart_guest");
+            }
+
+            // Thông báo tạm thời (nếu muốn hiển thị lại ngay tại Success)
+            TempData["Toast"] = "Thanh toán thành công!";
+
+            // Chuyển sang trang báo thành công
+            return RedirectToPage("/Cart/Success");
         }
     }
 }

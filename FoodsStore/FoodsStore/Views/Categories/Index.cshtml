@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FoodsStore.Models.ViewModels.CategoryViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Quản lý loại sản phẩm";
+}
+
+<h1>Danh Mục Loại Sản Phẩm</h1>
+
+<p>
+    <a asp-action="Create">Thêm Loại Sản Phẩm</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

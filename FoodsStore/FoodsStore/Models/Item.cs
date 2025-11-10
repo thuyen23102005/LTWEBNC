@@ -9,10 +9,7 @@
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public int SubCategoryId { get; set; }
-        public SubCategory SubCategory { get; set; }
 
-        public string? ImageUrl { get; set; } 
-        public bool IsActive { get; set; } = true;
+        public string? ImageUrl { get; set; }
     }
 }

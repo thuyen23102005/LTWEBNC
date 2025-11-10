@@ -1,5 +1,17 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\0b64d0e2-f559-4f4d-9ddc-ac6b764c1c5f-mi_tron.png
+wwwroot\images\3ea02919-d28e-481a-85d3-dddbc769c1fd-banana.png
+wwwroot\images\5ca49116-7c85-4c6c-b4c1-f5f673018ccb-banh_bao_sweet.png
+wwwroot\images\604322f5-b28f-449c-8c34-39778c60eee8-banh_mi.png
+wwwroot\images\9a4d5b1c-4dab-4227-9e04-065c3d307078-coconut.png
+wwwroot\images\a7810f5f-5312-45ab-9ae3-9d4ab48e2f5e-banh_bao_meaty.png
+wwwroot\images\banana.jpg
+wwwroot\images\banana.png
+wwwroot\images\c32bfd0c-ef53-4cd3-8cce-f2c2a42eb817-banana.png
+wwwroot\images\d790426f-ed75-4f2d-be2d-5813dfe42ae4-banh_bao_meaty.png
+wwwroot\images\f7003149-eb20-44f6-a14c-dc79024e65bc-banh_bao_meaty.png
+wwwroot\images\fc22d50a-7f32-4c8e-877c-5d5644619414-banana.png
 wwwroot\images\items\banh_mi.png
 wwwroot\images\items\cart_empty.png
 wwwroot\images\items\mi_tron.png
