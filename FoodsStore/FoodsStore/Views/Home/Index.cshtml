@@ -1,8 +1,194 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using FoodsStore.Models
+@model FoodListViewModel
+@{
+    ViewData["Title"] = "Thực Đơn";
+
+    var currentPage = Model.CurrentPage;
+    var totalPages = Model.TotalPages;
+    var currentCategory = Model.CurrentCategory;
+    var currentSearchTerm = Model.CurrentSearchTerm; // Lấy từ khóa tìm kiếm
+    var allCategories = Model.AllCategories;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="banner-slideshow-container">
+    <div class="banner-slide fade">
+        <div class="banner-box">
+            Ưu đãi 1: **GIẢM GIÁ 30%** cho tất cả Salad tươi ngon! 🥗
+        </div>
+    </div>
+    <div class="banner-slide fade">
+        <div class="banner-box">
+            Ưu đãi 2: **MIỄN PHÍ VẬN CHUYỂN** cho đơn hàng trên 200K! 🛵
+        </div>
+    </div>
+    <div class="banner-slide fade">
+        <div class="banner-box">
+            Ưu đãi 3: Món mới ra mắt: **Bánh Ngũ Cốc Socola**! 🍫
+        </div>
+    </div>
 </div>
+<div class="row mb-4">
+    <div class="col-12">
+        <form asp-controller="Home" asp-action="Index" method="get" class="d-flex">
+            <input type="hidden" name="category" value="@currentCategory" />
+
+            <input type="text" name="searchTerm" class="form-control me-2"
+                   placeholder="Tìm kiếm món ăn (ví dụ: Pizza, Bún bò...)"
+                   value="@currentSearchTerm" />
+
+            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+            @if (!string.IsNullOrWhiteSpace(currentSearchTerm))
+            {
+                <a asp-controller="Food" asp-action="Index"
+                   asp-route-category="@currentCategory"
+                   class="btn btn-outline-danger ms-2">Xóa tìm kiếm</a>
+            }
+        </form>
+    </div>
+</div>
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 style="color: #3C6E71; font-weight: bold;">Thực Đơn Của Chúng Tôi (@Model.ItemsOnPage.Count món)</h2>
+        <p class="text-muted">
+            Trang @currentPage / @totalPages -
+            Đang lọc:
+            <span style="font-weight: bold; color: #FF8A00;">
+                @if (currentCategory == "All")
+                {
+                    <text>Tất Cả Món Ăn</text>
+                }
+                else
+                {
+                    @currentCategory
+                }
+            </span>
+            @if (!string.IsNullOrWhiteSpace(currentSearchTerm))
+            {
+                <span class="text-info">(theo từ khóa: "@currentSearchTerm")</span>
+            }
+        </p>
+    </div>
+    <div class="col-md-6 text-md-end">
+        <div class="btn-group flex-wrap justify-content-end" role="group" aria-label="Food Categories">
+            @foreach (var category in allCategories)
+            {
+                <a asp-controller="Home" asp-action="Index"
+                   asp-route-pageIndex="1"
+                   asp-route-category="@category"
+                   asp-route-searchTerm="@currentSearchTerm"
+                   class="btn @(category == currentCategory ? "btn-success" : "btn-outline-secondary") my-1 me-1 rounded-pill">
+                    @if (category == "All")
+                    {
+                        <text>Tất Cả</text>
+                    }
+                    else
+                    {
+                        @category
+                    }
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    @if (Model.ItemsOnPage.Any())
+    {
+        @foreach (var item in Model.ItemsOnPage)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                @{
+                    // Định dạng Price từ decimal sang chuỗi tiền tệ (ví dụ: 120.000 VNĐ)
+                    string formattedPrice = item.Price.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) + " VNĐ";
+                }
+                <div class="card" style="cursor: pointer;"
+                     data-bs-toggle="modal"
+                     data-bs-target="#productDetailModal"
+                     data-product-title="@item.Name"
+                     data-product-description="@item.Description"
+                     data-product-price="@formattedPrice"
+                     data-product-image="@item.ImageUrl">
+
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">Giá: @formattedPrice</p>
+                        <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-success">Đặt món</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center py-5">
+            <p class="lead text-muted">Rất tiếc, không tìm thấy món ăn nào phù hợp với điều kiện tìm kiếm hiện tại.</p>
+            @if (!string.IsNullOrWhiteSpace(currentSearchTerm))
+            {
+                <p>Thử tìm kiếm từ khóa khác hoặc <a asp-controller="Home" asp-action="Index" asp-route-category="All" asp-route-searchTerm="">xóa tìm kiếm</a>.</p>
+            }
+        </div>
+    }
+
+</div>
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Food Pagination" class="mt-5">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a asp-controller="Home" asp-action="Index" asp-route-pageIndex="@(currentPage - 1)"
+                   asp-route-category="@currentCategory"
+                   asp-route-searchTerm="@currentSearchTerm"
+                   class="page-link">Trang trước</a>
+            </li>
+
+            @{
+                // Logic hiển thị nút số trang
+                int startPage = Math.Max(1, currentPage - 3);
+                int endPage = Math.Min(totalPages, currentPage + 3);
+            }
+
+            @if (startPage > 1)
+            {
+                <li class="page-item">
+                    <a asp-controller="Home" asp-action="Index" asp-route-pageIndex="1" asp-route-category="@currentCategory" asp-route-searchTerm="@currentSearchTerm" class="page-link">1</a>
+                </li>
+                if (startPage > 2)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+            }
+
+            @for (var i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a asp-controller="Home" asp-action="Index" asp-route-pageIndex="@i"
+                       asp-route-category="@currentCategory"
+                       asp-route-searchTerm="@currentSearchTerm"
+                       class="page-link">@i</a>
+                </li>
+            }
+
+            @if (endPage < totalPages)
+            {
+                if (endPage < totalPages - 1)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+                <li class="page-item">
+                    <a asp-controller="Home" asp-action="Index" asp-route-pageIndex="@totalPages" asp-route-category="@currentCategory" asp-route-searchTerm="@currentSearchTerm" class="page-link">@totalPages</a>
+                </li>
+            }
+
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a asp-controller="Home" asp-action="Index" asp-route-pageIndex="@(currentPage + 1)"
+                   asp-route-category="@currentCategory"
+                   asp-route-searchTerm="@currentSearchTerm"
+                   class="page-link">Trang sau</a>
+            </li>
+        </ul>
+    </nav>
+}

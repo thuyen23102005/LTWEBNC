@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -46,5 +46,178 @@ body {
 @media (max-width: 576px) {
     .cart-page .empty-illustration {
         max-width: 220px;
+    }
+}
+
+/* Bảng màu được áp dụng (Ấm Cúng & Tin Cậy):
+   Primary: #FF8A00 (Cam Rực Rỡ - CTA)
+   Secondary: #3C6E71 (Xanh Lục Bảo Đậm - Header/Nền phụ)
+   Accent: #E5383B (Đỏ Đất - Giảm giá/Nhấn mạnh)
+   Background: #F7F7F7 (Xám Nhạt Siêu Sáng)
+   Text: #282C34 (Xám Đen Sâu)
+*/
+
+/* 🌿 Nền tổng thể */
+body {
+    /* Nền Xám Nhạt Siêu Sáng */
+    background-color: #F7F7F7;
+    font-family: 'Segoe UI', sans-serif;
+    color: #282C34; /* Màu chữ Xám Đen Sâu */
+}
+
+/* 🔝 Header */
+.header-bar {
+    /* Dùng màu Secondary #3C6E71 cho thanh Header để tạo sự chuyên nghiệp */
+    background-color: #3C6E71;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Bóng đổ nhẹ nhàng */
+    box-shadow: 0 4px 6px rgba(40, 44, 52, 0.1);
+}
+
+/* 🧾 Ô quảng cáo (Banner) */
+.banner-box {
+    /* Nền trắng (hoặc có thể giữ #F7F7F7) */
+    background-color: white;
+    /* Viền Cam Rực Rỡ #FF8A00 tạo sự ngon miệng */
+    border: 2px dashed #FF8A00;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem auto;
+    text-align: center;
+    color: #282C34;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* 🧱 Card món ăn */
+.card {
+    /* Card nền trắng tinh để nổi bật trên nền #F7F7F7 */
+    background-color: white;
+    /* Viền Secondary #3C6E71 */
+    border: 1px solid #3C6E71;
+    /* Bóng đổ nhẹ */
+    box-shadow: 0 4px 8px rgba(40, 44, 52, 0.05);
+    transition: transform 0.3s ease;
+    border-radius: 12px;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        /* Bóng đổ Cam Rực Rỡ khi hover */
+        box-shadow: 0 6px 12px rgba(255, 138, 0, 0.2);
+    }
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    /* Dải phân cách Cam Rực Rỡ */
+    border-bottom: 2px solid #FF8A00;
+}
+
+.card-title {
+    font-weight: 700;
+    color: #282C34;
+}
+
+.card-text {
+    font-weight: 500;
+    color: #282C34;
+}
+
+/* 🟢 Nút đặt món (Nút chính - CTA) */
+.btn-success {
+    /* Dùng màu Primary #FF8A00 (Cam Rực Rỡ) cho nút CTA */
+    background-color: #FF8A00;
+    border-color: #FF8A00;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+    .btn-success:hover {
+        /* Màu tối hơn khi hover */
+        background-color: #E57D00;
+        border-color: #E57D00;
+        color: white;
+    }
+
+/* 🔘 Nút đăng nhập/đăng ký (Nút phụ trên Header) */
+.btn-outline-light {
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+    .btn-outline-light:hover {
+        background-color: white;
+        /* Chữ màu Xanh Lục Bảo Đậm khi hover */
+        color: #3C6E71;
+    }
+
+/* 📜 Tiêu đề trang */
+.section-title {
+    text-align: center;
+    margin: 2rem 0 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    /* Dùng màu Text #282C34 hoặc Secondary #3C6E71 */
+    color: #3C6E71;
+}
+
+/* 📱 Scroll nội dung */
+.scrollable-content {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}
+/* Sử dụng cho toàn bộ body */
+body {
+    background-color: #f8f9fa; /* Màu nền dự phòng */
+    background-image:
+    /* Hình ảnh bên trái, đặt ở góc trên bên trái */
+    url('/images/G4g8xS2a8AARG9B.jpg'),
+    /* Hình ảnh bên phải, đặt ở góc trên bên phải */
+    url('/images/G4g8xS2a8AARG9B.jpg');
+    background-repeat: no-repeat; /* Không lặp lại ảnh */
+    background-attachment: fixed; /* Giữ ảnh cố định khi cuộn */
+    /* Định vị và Kích thước cho hai ảnh */
+    background-position: left top, /* Ảnh trái: căn trên cùng, bên trái */
+    right top; /* Ảnh phải: căn trên cùng, bên phải */
+
+    background-size: contain, /* Ảnh trái: đảm bảo ảnh luôn nằm trọn trong khu vực */
+    contain; /* Ảnh phải: đảm bảo ảnh luôn nằm trọn trong khu vực */
+    /* Điều chỉnh các giá trị bên dưới nếu cần */
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+/* Quan trọng: Điều chỉnh container chính để tạo ra khoảng trống */
+.container {
+    max-width: 1000px; /* Giới hạn container chính (thay đổi giá trị này) */
+    background-color: #ffffff; /* Đặt nền trắng cho nội dung chính */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Tạo bóng đổ cho nội dung */
+    /* Các thuộc tính khác của container bạn đang dùng */
+}
+
+/* Ẩn hình ảnh nền trên màn hình nhỏ để ưu tiên nội dung */
+@media (max-width: 1200px) {
+    body {
+        background-image: none; /* Xóa hình ảnh nền */
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .container {
+        max-width: 95vw;
     }
 }

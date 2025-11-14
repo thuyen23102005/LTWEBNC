@@ -10,8 +10,8 @@ wwwroot\images\banana.jpg
 wwwroot\images\banana.png
 wwwroot\images\c32bfd0c-ef53-4cd3-8cce-f2c2a42eb817-banana.png
 wwwroot\images\d790426f-ed75-4f2d-be2d-5813dfe42ae4-banh_bao_meaty.png
+wwwroot\images\e6f92c81-86a8-44bb-aab3-d9ffccdd7e2a-banana.png
 wwwroot\images\f7003149-eb20-44f6-a14c-dc79024e65bc-banh_bao_meaty.png
-wwwroot\images\fc22d50a-7f32-4c8e-877c-5d5644619414-banana.png
 wwwroot\images\items\banh_mi.png
 wwwroot\images\items\cart_empty.png
 wwwroot\images\items\mi_tron.png
