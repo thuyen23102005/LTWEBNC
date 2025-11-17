@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Qs652Jk0TqU=",
+  "dgSpecHash": "bteJBB25zqY=",
   "success": true,
-  "projectFilePath": "D:\\New folder\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
+  "projectFilePath": "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC ASUS\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\PC ASUS\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

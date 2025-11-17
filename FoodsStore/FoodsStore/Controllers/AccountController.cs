@@ -35,7 +35,6 @@ namespace FoodsStore.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.UserName,
-                    Email = model.UserName // nếu dùng email làm username thì giữ nguyên
                 };
 
                 // Tạo user trong database
@@ -43,9 +42,8 @@ namespace FoodsStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Đăng nhập ngay sau khi đăng ký
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+             
+                    return RedirectToAction("Index", "Login");
                 }
 
                 // Nếu có lỗi, thêm vào ModelState để hiển thị ra form
@@ -83,26 +81,27 @@ namespace FoodsStore.Controllers
         // Xử lý khi người dùng bấm nút Đăng nhập
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(Login model) // <-- 1. SỬA: Nhận (Login model)
         {
-            var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
-
-            if (result.Succeeded)
+            // 2. THÊM: Kiểm tra ModelState (rất quan trọng)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                // 3. SỬA: Dùng thuộc tính từ model
+                var result = await _signInManager.PasswordSignInAsync(
+                    model.UserName,      // Dùng model.UserName
+                    model.PasswordUser,  // Dùng model.PasswordUser
+                    isPersistent: true, // isPersistent: false = không nhớ tài khoản
+                    lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
+            // 4. SỬA: Trả "model" về View để hiển thị lỗi
             ModelState.AddModelError("", "Đăng nhập không thành công. Kiểm tra lại tài khoản hoặc mật khẩu.");
-            return View();
-        }
-
-        // Đăng xuất
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return View(model);
         }
     }
 }
