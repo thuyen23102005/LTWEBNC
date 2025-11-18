@@ -31,10 +31,15 @@ namespace FoodsStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Tạo đối tượng ApplicationUser mới
+                // Tạo đối tượng ApplicationUser mới với đầy đủ thông tin từ form
                 var user = new ApplicationUser
                 {
                     UserName = model.UserName,
+                    Email = model.UserName,   // nếu UserName là email, giữ dòng này; nếu không thì bỏ
+                    Name = model.Name,
+                    City = model.City,
+                    Address = model.Address,
+                    PostalCode = model.PostalCode
                 };
 
                 // Tạo user trong database
@@ -42,12 +47,13 @@ namespace FoodsStore.Controllers
 
                 if (result.Succeeded)
                 {
-             
-                    return RedirectToAction("Index", "Login");
+                    // Có thể đăng nhập luôn nếu muốn:
+                    // await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Login", "Account");
                 }
 
                 // Nếu có lỗi, thêm vào ModelState để hiển thị ra form
-               
                 foreach (var error in result.Errors)
                 {
                     string message = error.Description;
@@ -81,16 +87,14 @@ namespace FoodsStore.Controllers
         // Xử lý khi người dùng bấm nút Đăng nhập
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(Login model) // <-- 1. SỬA: Nhận (Login model)
+        public async Task<IActionResult> Login(Login model)
         {
-            // 2. THÊM: Kiểm tra ModelState (rất quan trọng)
             if (ModelState.IsValid)
             {
-                // 3. SỬA: Dùng thuộc tính từ model
                 var result = await _signInManager.PasswordSignInAsync(
-                    model.UserName,      // Dùng model.UserName
-                    model.PasswordUser,  // Dùng model.PasswordUser
-                    isPersistent: true, // isPersistent: false = không nhớ tài khoản
+                    model.UserName,
+                    model.PasswordUser,
+                    isPersistent: true,
                     lockoutOnFailure: false);
 
                 if (result.Succeeded)
@@ -99,7 +103,6 @@ namespace FoodsStore.Controllers
                 }
             }
 
-            // 4. SỬA: Trả "model" về View để hiển thị lỗi
             ModelState.AddModelError("", "Đăng nhập không thành công. Kiểm tra lại tài khoản hoặc mật khẩu.");
             return View(model);
         }

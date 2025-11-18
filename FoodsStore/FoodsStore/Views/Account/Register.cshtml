@@ -155,10 +155,13 @@
         <div class="register-box">
             @using (Html.BeginForm("Register", "Account", FormMethod.Post))
             {
+                @Html.AntiForgeryToken()
+
                 <h2>Đăng ký</h2>
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+                <!-- Tài khoản -->
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
                     @Html.TextBoxFor(m => m.UserName, new { required = "required" })
@@ -166,21 +169,57 @@
                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
 
+                <!-- Họ và tên (Name) -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                    @Html.TextBoxFor(m => m.Name, new { required = "required" })
+                    <label>Họ và tên</label>
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Thành phố (City) -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="location-outline"></ion-icon></span>
+                    @Html.TextBoxFor(m => m.City, new { required = "required" })
+                    <label>Thành phố</label>
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Địa chỉ (Address) -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    @Html.TextBoxFor(m => m.Address, new { required = "required" })
+                    <label>Địa chỉ</label>
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Mã bưu điện (PostalCode) -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail-open-outline"></ion-icon></span>
+                    @Html.TextBoxFor(m => m.PostalCode, new { required = "required" })
+                    <label>Mã bưu điện</label>
+                    @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Mật khẩu -->
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                     @Html.PasswordFor(m => m.Password, new { required = "required", id = "registerPassword" })
                     <label>Mật khẩu</label>
-                    <span class="icon" style="right: 35px; cursor: pointer;" onclick="togglePassword('registerPassword', 'eyeIcon1')">
+                    <span class="icon" style="right: 35px; cursor: pointer;"
+                          onclick="togglePassword('registerPassword', 'eyeIcon1')">
                         <ion-icon id="eyeIcon1" name="eye-off-outline"></ion-icon>
                     </span>
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
 
+                <!-- Xác nhận mật khẩu -->
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                     @Html.PasswordFor(m => m.ConfirmPassword, new { required = "required", id = "confirmPassword" })
                     <label>Xác nhận mật khẩu</label>
-                    <span class="icon" style="right: 35px; cursor: pointer;" onclick="togglePassword('confirmPassword', 'eyeIcon2')">
+                    <span class="icon" style="right: 35px; cursor: pointer;"
+                          onclick="togglePassword('confirmPassword', 'eyeIcon2')">
                         <ion-icon id="eyeIcon2" name="eye-off-outline"></ion-icon>
                     </span>
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
@@ -212,14 +251,11 @@
             }
         }
     </script>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
 </body>
 </html>
