@@ -1,0 +1,251 @@
+﻿@model FoodsStore.Models.Login
+@{
+    ViewBag.Title = "Đăng nhập";
+    // 1. GỠ BỎ LAYOUT
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - FoodsStore</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FoodsStore.styles.css" asp-append-version="true" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 3. CHỈNH CSS BACKGROUND */
+        html, body {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Đặt hình nền cho body */
+            background-image: url('/images/Br.jpg');
+            /* Yêu cầu của bạn: Background cố định */
+            background-attachment: fixed;
+            /* Các thuộc tính khác để hình nền full và đẹp */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Section bây giờ chỉ làm nhiệm vụ căn giữa */
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh; /* Chiếm tối thiểu 100% chiều cao */
+            padding: 20px; /* Thêm padding cho an toàn */
+        }
+
+        /* CSS cho form đăng nhập (giữ nguyên như cũ) */
+        .login-box {
+            position: relative;
+            width: 400px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            padding: 20px;
+        }
+
+            .login-box h2 {
+                font-size: 2em;
+                color: #fff;
+                text-align: center;
+            }
+
+        .input-box {
+            position: relative;
+            width: 310px;
+            margin: 30px 0;
+            border-bottom: 2px solid #fff;
+        }
+
+            .input-box label {
+                position: absolute;
+                top: 50%;
+                left: 5px;
+                transform: translateY(-50%);
+                font-size: 1em;
+                color: #fff;
+                pointer-events: none;
+                transition: .5s;
+            }
+
+            .input-box input:focus ~ label,
+            .input-box input:valid ~ label {
+                top: -5px;
+            }
+
+            .input-box input {
+                width: 100%;
+                height: 50px;
+                background: transparent;
+                border: none;
+                outline: none;
+                font-size: 1em;
+                color: #fff;
+                padding: 0 35px 0 5px;
+            }
+
+            .input-box .icon {
+                position: absolute;
+                right: 8px;
+                color: #fff;
+                font-size: 1.2em;
+                line-height: 57px;
+            }
+
+        .remember-forgot {
+            margin: -15px 0 15px;
+            font-size: .9em;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .remember-forgot label input {
+                margin-right: 3px;
+            }
+
+            .remember-forgot a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+                .remember-forgot a:hover {
+                    text-decoration: underline;
+                }
+
+        button {
+            width: 100%;
+            height: 40px;
+            background: #fff;
+            border-radius: 40px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .register-link {
+            font-size: .9em;
+            color: #fff;
+            text-align: center;
+            margin: 25px 0 10px;
+        }
+
+            .register-link p a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+                .register-link p a:hover {
+                    text-decoration: underline;
+                }
+
+        .text-danger {
+            color: #ffcccc;
+            font-size: 0.9em;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="login-box">
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                <h2>Đăng nhập</h2>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    @Html.TextBoxFor(m => m.UserName, new { required = "required" })
+                    <label>Tài khoản</label>
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <span class="icon" style="right: 35px; cursor: pointer;" onclick="togglePassword()">
+                        <ion-icon id="eyeIcon" name="eye-off-outline"></ion-icon>
+                    </span>
+                    @Html.PasswordFor(m => m.PasswordUser, new { id = "password", required = "required" })
+                    <label>Mật khẩu</label>
+                    @Html.ValidationMessageFor(m => m.PasswordUser, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="remember-forgot">
+                    <label><input type="checkbox" /> Nhớ tài khoản</label>
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit">Đăng nhập</button>
+
+                <div>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="text-danger" style="margin:10px; text-align:center;">
+                            @ViewBag.Error
+                        </div>
+                    }
+                </div>
+
+                <div class="register-link">
+                    <p>Bạn chưa có tài khoản? <a href="@Url.Action("Register", "Account")">Đăng ký ngay</a> </p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.name = "eye-outline";
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.name = "eye-off-outline";
+            }
+        }
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+</body>
+</html>
