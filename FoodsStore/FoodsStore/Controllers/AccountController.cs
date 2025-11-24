@@ -14,10 +14,10 @@ namespace FoodsStore.Controllers
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
+            _signInManager = signInManager;           
         }
 
-        // Hiển thị trang đăng ký
+        // ---------------- REGISTER -------------------
         [HttpGet]
         public IActionResult Register()
         {
@@ -47,10 +47,10 @@ namespace FoodsStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Có thể đăng nhập luôn nếu muốn:
-                    // await _signInManager.SignInAsync(user, isPersistent: false);
+                    // Default role = Customer
+                    await _userManager.AddToRoleAsync(user, "Customer");
 
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Login");
                 }
 
                 // Nếu có lỗi, thêm vào ModelState để hiển thị ra form
@@ -77,11 +77,24 @@ namespace FoodsStore.Controllers
             return View(model);
         }
 
-        // Hiển thị trang đăng nhập
+        // ---------------- LOGIN -------------------
         [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+
+        // ---------------- LOGOUT -------------------
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+        // ---------------- ACCESS DENIED -------------------
+        public IActionResult AccessDenied()
+        {
+            return Content("Bạn không có quyền truy cập!");
         }
 
         // Xử lý khi người dùng bấm nút Đăng nhập
@@ -91,19 +104,17 @@ namespace FoodsStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(
-                    model.UserName,
-                    model.PasswordUser,
-                    isPersistent: true,
-                    lockoutOnFailure: false);
+                var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (result.Succeeded)
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        return RedirectToAction("Index", "Items", new { area = "Admin" });
                 }
+                return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Đăng nhập không thành công. Kiểm tra lại tài khoản hoặc mật khẩu.");
+            ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             return View(model);
         }
     }

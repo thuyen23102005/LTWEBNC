@@ -6,15 +6,15 @@ namespace FoodsStore.Repository
 {
     public class DbInitializer
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public DbInitializer(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public DbInitializer(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public void Initializer()
@@ -30,40 +30,56 @@ namespace FoodsStore.Repository
             {
                 throw;
             }
-            if (_context.Roles.Any(x => x.Name == "Admin")) return;
-            _roleManager.CreateAsync(new IdentityRole("Manager")).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole("Customer")).GetAwaiter().GetResult();
-            var user = new ApplicationUser()
+            if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
             {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com",
-                Name = "Admin",
-                City = "Xyz",
-                Address = "Xyz",
-                PostalCode = "333333"
-            };
+                _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("Manager")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("Customer")).GetAwaiter().GetResult();
 
-            _userManager.CreateAsync(user, "Admin@123").GetAwaiter().GetResult();
-            _userManager.AddToRoleAsync(user, "Admin");
-
-            // Seed cart sample only if empty
-            if (!_context.Carts.Any())
-            {
-                // KHÔNG dùng lại tên 'user' nữa → đổi tên
-                var admin = _context.Users.FirstOrDefault(u => u.Email == "admin@gmail.com");
-
-                // Lấy item cần seed
-                var miTron = _context.Items.FirstOrDefault(i => i.Title == "Mì trộn sa tế");
-                var traChanh = _context.Items.FirstOrDefault(i => i.Title == "Trà chanh");
-
-                if (admin != null && miTron != null && traChanh != null)
+                var user = new ApplicationUser()
                 {
-                    _context.Carts.AddRange(
-                        new Cart { ApplicationUserId = admin.Id, ItemId = miTron.Id, Count = 1 },
-                        new Cart { ApplicationUserId = admin.Id, ItemId = traChanh.Id, Count = 2 }
-                    );
-                    _context.SaveChanges();
+                    UserName = "admin@gmail.com",
+                    Email = "admin@gmail.com",
+                    Name = "Admin",
+                    City = "Xyz",
+                    Address = "Xyz",
+                    PostalCode = "333333"
+                };
+
+                _userManager.CreateAsync(user, "Admin@123").GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+            }
+        }
+
+        public static async Task SeedAdmin(IServiceProvider service)
+        {
+            var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
+
+            // 1. Tạo Role nếu chưa có
+            if (!await roleManager.RoleExistsAsync("Admin"))
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+            // 2. Kiểm tra user đã tồn tại chưa
+            var admin = await userManager.FindByEmailAsync("admin@gmail.com");
+            if (admin == null)
+            {
+                admin = new ApplicationUser
+                {
+                    UserName = "admin",
+                    Email = "admin@gmail.com",
+                    Name = "Admin",
+                    City = "Xyz",
+                    Address = "Xyz",
+                    PostalCode = "333333",
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(admin, "Admin@123");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(admin, "Admin");
                 }
             }
         }
