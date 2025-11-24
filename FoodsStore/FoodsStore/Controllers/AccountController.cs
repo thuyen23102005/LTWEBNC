@@ -9,99 +9,117 @@ namespace FoodsStore.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        // Inject UserManager và SignInManager (ASP.NET Identity)
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
-        // Hiển thị trang đăng ký
+        // ---------------- REGISTER -------------------
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        // Xử lý khi người dùng bấm nút Đăng ký
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register model)
         {
             if (ModelState.IsValid)
             {
-                // Tạo đối tượng ApplicationUser mới
-                var user = new ApplicationUser
-                {
-                    UserName = model.UserName,
-                };
+                var user = new ApplicationUser { UserName = model.UserName };
 
-                // Tạo user trong database
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-             
-                    return RedirectToAction("Index", "Login");
+                    // Default role = Customer
+                    await _userManager.AddToRoleAsync(user, "Customer");
+
+                    return RedirectToAction("Login");
                 }
 
-                // Nếu có lỗi, thêm vào ModelState để hiển thị ra form
-               
                 foreach (var error in result.Errors)
-                {
-                    string message = error.Description;
-
-                    if (message.Contains("non alphanumeric"))
-                        message = "Mật khẩu phải có ít nhất 1 ký tự đặc biệt.";
-                    else if (message.Contains("lowercase"))
-                        message = "Mật khẩu phải có ít nhất 1 chữ thường (a–z).";
-                    else if (message.Contains("uppercase"))
-                        message = "Mật khẩu phải có ít nhất 1 chữ hoa (A–Z).";
-                    else if (message.Contains("digit"))
-                        message = "Mật khẩu phải có ít nhất 1 chữ số (0–9).";
-                    else if (message.Contains("at least"))
-                        message = "Mật khẩu quá ngắn.";
-
-                    ModelState.AddModelError("", message);
-                }
+                    ModelState.AddModelError("", error.Description);
             }
 
-            // Nếu không hợp lệ, quay lại view và hiển thị lỗi
             return View(model);
         }
 
-        // Hiển thị trang đăng nhập
+        // ---------------- LOGIN -------------------
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // Xử lý khi người dùng bấm nút Đăng nhập
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(Login model) // <-- 1. SỬA: Nhận (Login model)
+        public async Task<IActionResult> Login(Login model)
         {
-            // 2. THÊM: Kiểm tra ModelState (rất quan trọng)
             if (ModelState.IsValid)
             {
-                // 3. SỬA: Dùng thuộc tính từ model
                 var result = await _signInManager.PasswordSignInAsync(
-                    model.UserName,      // Dùng model.UserName
-                    model.PasswordUser,  // Dùng model.PasswordUser
-                    isPersistent: true, // isPersistent: false = không nhớ tài khoản
-                    lockoutOnFailure: false);
+                    model.UserName,
+                    model.PasswordUser,
+                    true,
+                    false);
 
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+
+
                     return RedirectToAction("Index", "Home");
                 }
             }
 
-            // 4. SỬA: Trả "model" về View để hiển thị lỗi
-            ModelState.AddModelError("", "Đăng nhập không thành công. Kiểm tra lại tài khoản hoặc mật khẩu.");
+            ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             return View(model);
         }
+
+        // ---------------- LOGOUT -------------------
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+        // ---------------- CREATE ADMIN QUICK -------------------
+        // Chạy 1 lần tại /Account/CreateAdmin
+        [HttpGet]
+        public async Task<IActionResult> CreateAdmin()
+        {
+            if (await _userManager.FindByNameAsync("admin") != null)
+                return Content("Admin đã tồn tại!");
+
+            var adminUser = new ApplicationUser { UserName = "admin" };
+            var result = await _userManager.CreateAsync(adminUser, "123456");
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(adminUser, "Admin");
+                return Content("Tạo admin thành công: user=admin pass=123456");
+            }
+
+            return Content("Tạo Admin thất bại!");
+        }
+
+        // ---------------- ACCESS DENIED -------------------
+        public IActionResult AccessDenied()
+        {
+            return Content("Bạn không có quyền truy cập!");
+        }
+
     }
 }
