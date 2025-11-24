@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj": {}
+    "D:\\Git Code\\triet\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj": {}
   },
   "projects": {
-    "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj": {
+    "D:\\Git Code\\triet\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
+        "projectUniqueName": "D:\\Git Code\\triet\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
         "projectName": "FoodsStore",
-        "projectPath": "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
-        "packagesPath": "C:\\Users\\PC ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\LTWEBNC\\FoodsStore\\FoodsStore\\obj\\",
+        "projectPath": "D:\\Git Code\\triet\\LTWEBNC\\FoodsStore\\FoodsStore\\FoodsStore.csproj",
+        "packagesPath": "C:\\Users\\ngoth\\.nuget\\packages\\",
+        "outputPath": "D:\\Git Code\\triet\\LTWEBNC\\FoodsStore\\FoodsStore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\PC ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ngoth\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -86,6 +86,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -94,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\RuntimeIdentifierGraph.json"
         }
       }
     }

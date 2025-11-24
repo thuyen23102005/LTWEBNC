@@ -12,6 +12,26 @@ namespace FoodsStore.Models
         [Display(Name = "Tài khoản")]
         public string UserName { get; set; }
 
+        // Họ và tên
+        [Required(ErrorMessage = "Vui lòng nhập họ và tên.")]
+        [Display(Name = "Họ và tên")]
+        public string Name { get; set; }
+
+        // Thành phố
+        [Required(ErrorMessage = "Vui lòng nhập thành phố.")]
+        [Display(Name = "Thành phố")]
+        public string City { get; set; }
+
+        // Địa chỉ
+        [Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
+        [Display(Name = "Địa chỉ")]
+        public string Address { get; set; }
+
+        // Mã bưu điện
+        [Required(ErrorMessage = "Vui lòng nhập mã bưu điện.")]
+        [Display(Name = "Mã bưu điện")]
+        public string PostalCode { get; set; }
+
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]

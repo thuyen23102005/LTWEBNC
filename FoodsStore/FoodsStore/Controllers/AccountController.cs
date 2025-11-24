@@ -34,18 +34,41 @@ namespace FoodsStore.Controllers
         {
             if (ModelState.IsValid)
             {
+<<<<<<< HEAD
                 var user = new ApplicationUser { UserName = model.UserName };
+=======
+                // Tạo đối tượng ApplicationUser mới với đầy đủ thông tin từ form
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName,
+                    Email = model.UserName,   // nếu UserName là email, giữ dòng này; nếu không thì bỏ
+                    Name = model.Name,
+                    City = model.City,
+                    Address = model.Address,
+                    PostalCode = model.PostalCode
+                };
+>>>>>>> ec3b59adc5b22753f875eae824a4a0d2978043a6
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+<<<<<<< HEAD
                     // Default role = Customer
                     await _userManager.AddToRoleAsync(user, "Customer");
 
                     return RedirectToAction("Login");
                 }
 
+=======
+                    // Có thể đăng nhập luôn nếu muốn:
+                    // await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Login", "Account");
+                }
+
+                // Nếu có lỗi, thêm vào ModelState để hiển thị ra form
+>>>>>>> ec3b59adc5b22753f875eae824a4a0d2978043a6
                 foreach (var error in result.Errors)
                     ModelState.AddModelError("", error.Description);
             }
@@ -69,8 +92,13 @@ namespace FoodsStore.Controllers
                 var result = await _signInManager.PasswordSignInAsync(
                     model.UserName,
                     model.PasswordUser,
+<<<<<<< HEAD
                     true,
                     false);
+=======
+                    isPersistent: true,
+                    lockoutOnFailure: false);
+>>>>>>> ec3b59adc5b22753f875eae824a4a0d2978043a6
 
                 if (result.Succeeded)
                 {
@@ -84,7 +112,11 @@ namespace FoodsStore.Controllers
                 }
             }
 
+<<<<<<< HEAD
             ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
+=======
+            ModelState.AddModelError("", "Đăng nhập không thành công. Kiểm tra lại tài khoản hoặc mật khẩu.");
+>>>>>>> ec3b59adc5b22753f875eae824a4a0d2978043a6
             return View(model);
         }
 
