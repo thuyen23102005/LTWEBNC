@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FoodsStore.Controllers
 {
@@ -20,7 +21,7 @@ namespace FoodsStore.Controllers
             _environment = environment;
         }
         [HttpGet]
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string search, string sort, int page = 1)
         {
             int pageSize = 5; // số sản phẩm mỗi trang
             var items = _context.Items.Include(x => x.Category)
@@ -33,6 +34,32 @@ namespace FoodsStore.Controllers
                     CategoryId = model.CategoryId,
                     ImagePath = model.Image
                 });
+            // Nếu có từ khóa tìm kiếm
+            if (!string.IsNullOrEmpty(search))
+            {
+                items = items.Where(x =>
+                    x.Title.Contains(search) ||
+                    x.Description.Contains(search)
+                );
+            }
+            // Sắp xếp giá
+            ViewBag.Sort = sort;
+
+            switch (sort)
+            {
+                case "price_asc":
+                    items = items.OrderBy(x => x.Price);
+                    break;
+
+                case "price_desc":
+                    items = items.OrderByDescending(x => x.Price);
+                    break;
+
+                default:
+                    // mặc định không sort
+                    break;
+            }
+
             // Tính toán số lượng trang
             int totalItems = items.Count();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
@@ -46,6 +73,7 @@ namespace FoodsStore.Controllers
             // Truyền thông tin phân trang qua ViewBag
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
+            ViewBag.Search = search; // giữ lại từ khóa khi bấm phân trang
 
             return View(pagedItems);
         }
@@ -106,6 +134,12 @@ namespace FoodsStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ItemViewModel vm)
         {
+            // Nếu người dùng không chọn file mới, bỏ validation error cho ImageUrl
+            if (vm.ImageUrl == null || vm.ImageUrl.Length == 0)
+            {
+                ModelState.Remove("ImageUrl");
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Category = new SelectList(_context.Categories, "Id", "Title", vm.CategoryId);
@@ -116,21 +150,21 @@ namespace FoodsStore.Controllers
             if (item == null)
                 return NotFound();
 
+            // Cập nhật thông tin cơ bản
             item.Title = vm.Title;
             item.Description = vm.Description;
             item.Price = vm.Price;
             item.CategoryId = vm.CategoryId;
 
-            // Nếu có upload ảnh mới
+            // Nếu có ảnh mới thì xử lý xóa + lưu
             if (vm.ImageUrl != null && vm.ImageUrl.Length > 0)
             {
-                // Xóa ảnh cũ an toàn
+                // Xóa ảnh cũ nếu tồn tại
                 if (!string.IsNullOrEmpty(item.Image))
                 {
                     var oldPath = Path.Combine(_environment.WebRootPath, item.Image.TrimStart('/'));
                     if (System.IO.File.Exists(oldPath))
                     {
-                        // Giải phóng file đang bị giữ trước khi xóa
                         GC.Collect();
                         GC.WaitForPendingFinalizers();
                         System.IO.File.Delete(oldPath);
@@ -140,18 +174,20 @@ namespace FoodsStore.Controllers
                 // Lưu ảnh mới
                 var uploadDir = "images";
                 var filename = Guid.NewGuid().ToString() + "-" + vm.ImageUrl.FileName;
-                var path = Path.Combine(_environment.WebRootPath, uploadDir, filename);
+                var newPath = Path.Combine(_environment.WebRootPath, uploadDir, filename);
 
-                using (var stream = new FileStream(path, FileMode.Create))
+                using (var stream = new FileStream(newPath, FileMode.Create))
                 {
                     await vm.ImageUrl.CopyToAsync(stream);
                 }
 
                 item.Image = "/" + uploadDir + "/" + filename;
             }
+            // Nếu không có ảnh mới -> giữ nguyên item.Image
 
             _context.Update(item);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
