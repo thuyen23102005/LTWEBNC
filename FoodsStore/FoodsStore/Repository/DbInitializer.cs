@@ -51,6 +51,7 @@ namespace FoodsStore.Repository
             }
         }
 
+        // Tạo Acc Admin
         public static async Task SeedAdmin(IServiceProvider service)
         {
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();

@@ -1,0 +1,84 @@
+﻿@page
+@model FoodsStore.Pages.Cart.CheckoutModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="container my-4">
+    <h3 class="fw-semibold mb-4">Thanh toán</h3>
+
+    <div class="row g-4">
+        <!-- LEFT: Form thông tin khách -->
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    Thông tin người đặt
+                </div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Name" class="form-label"></label>
+                        <input asp-for="Input.Name" class="form-control" placeholder="Nhập họ và tên" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Phone" class="form-label"></label>
+                        <input asp-for="Input.Phone" class="form-control" placeholder="Nhập số điện thoại" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Address" class="form-label"></label>
+                        <input asp-for="Input.Address" class="form-control" placeholder="Nhập địa chỉ giao hàng" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.City" class="form-label"></label>
+                        <input asp-for="Input.City" class="form-control" placeholder="Nhập thành phố" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.PostalCode" class="form-label"></label>
+                        <input asp-for="Input.PostalCode" class="form-control" placeholder="Ví dụ: 700000" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Xác nhận đặt hàng
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Tóm tắt đơn hàng -->
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-semibold">
+                    Tóm tắt đơn hàng
+                </div>
+                <div class="card-body">
+                    @* Hiển thị Model.Lines + tổng tiền *@
+                    <ul class="list-group mb-3">
+                        @foreach (var l in Model.Lines)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>@l.Title x @l.Count</span>
+                                <span>@Model.ToCurrency(l.LineTotal)</span>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Tổng cộng:</span>
+                        <span>@Model.ToCurrency(Model.GrandTotal)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

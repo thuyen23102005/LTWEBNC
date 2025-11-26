@@ -1,4 +1,4 @@
-﻿@using FoodsStore.Models
+﻿@using FoodsStore.Models.ViewModels
 @model FoodListViewModel
 @{
     ViewData["Title"] = "Thực Đơn";
@@ -106,14 +106,15 @@
                 <div class="card" style="cursor: pointer;"
                      data-bs-toggle="modal"
                      data-bs-target="#productDetailModal"
-                     data-product-title="@item.Name"
+                     data-product-id="@item.Id"
+                     data-product-title="@item.Title"
                      data-product-description="@item.Description"
                      data-product-price="@formattedPrice"
                      data-product-image="@item.ImageUrl">
 
-                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover;">
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
+                        <h5 class="card-title">@item.Title</h5>
                         <p class="card-text">Giá: @formattedPrice</p>
                         <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-success">Đặt món</a>
                     </div>

@@ -8,7 +8,7 @@
 <div class="container cart-page my-4">
     <h3 class="fw-semibold mb-4">🛒 Giỏ Hàng Của Bạn</h3>
 
-    @* ==== LAYOUT KHI KHÔNG CÓ HÀNG ==== *@
+    @* ==== KHI GIỎ TRỐNG ==== *@
     @if (Model.Lines == null || Model.Lines.Count == 0)
     {
         <div class="empty-cart d-flex flex-column align-items-center text-center py-5">
@@ -27,8 +27,8 @@
     }
     else
     {
-        @* ==== LAYOUT KHI CÓ HÀNG ==== *@
-        <div class="row g-4">
+        @* ==== KHI GIỎ CÓ HÀNG ==== *@
+        <div class="row g-4 align-items-start">
             <!-- LEFT: bảng sản phẩm -->
             <div class="col-12 col-lg-8">
                 <div class="card shadow-sm">
@@ -57,45 +57,64 @@
                                             <td>
                                                 <input class="form-check-input" type="checkbox" checked />
                                             </td>
+
                                             <td class="d-flex align-items-center gap-3">
                                                 <img src="@Url.Content(l.ImageUrl ?? $"/images/items/{l.ItemId}.png")"
                                                      onerror="this.onerror=null;this.src='/images/placeholder.png';"
-                                                     style="width:56px;height:56px;object-fit:cover" class="rounded" alt="@l.Title" />
+                                                     style="width:56px;height:56px;object-fit:cover"
+                                                     class="rounded"
+                                                     alt="@l.Title" />
                                                 <div class="fw-semibold">@l.Title</div>
                                             </td>
+
                                             <td class="text-end">@Model.ToCurrency(l.Price)</td>
+
+                                            @* --- Cột SỐ LƯỢNG --- *@
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
-                                                    <form method="post" asp-page-handler="Update">
+                                                    @* Nút giảm *@
+                                                    <form method="post" class="d-inline">
                                                         @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                        <input type="hidden" name="count" value="@(Math.Max(1, l.Count - 1))" />
-                                                        <button class="btn btn-outline-secondary btn-sm" @(l.Count <= 1 ? "disabled" : "")>-</button>
-                                                    </form>
-                                                    
-                                                    <form method="post" asp-page-handler="Update">
-                                                        @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                        <input type="number" name="count" min="1" value="@l.Count"
-                                                               class="form-control form-control-sm text-center" style="width:60px" />
+                                                        <button type="submit"
+                                                                class="btn btn-outline-secondary btn-sm"
+                                                                formaction="/Cart/Index?handler=Update&itemId=@l.ItemId&count=@(Math.Max(1, l.Count - 1))"
+                                                                @(l.Count <= 1 ? "disabled" : "")>
+                                                            -
+                                                        </button>
                                                     </form>
 
-                                                    <form method="post" asp-page-handler="Update">
+                                                    <input type="text"
+                                                           readonly
+                                                           class="form-control form-control-sm text-center"
+                                                           style="width:60px"
+                                                           value="@l.Count" />
+
+                                                    @* Nút tăng *@
+                                                    <form method="post" class="d-inline">
                                                         @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                        <input type="hidden" name="count" value="@(l.Count + 1)" />
-                                                        <button class="btn btn-outline-secondary btn-sm">+</button>
+                                                        <button type="submit"
+                                                                class="btn btn-outline-secondary btn-sm"
+                                                                formaction="/Cart/Index?handler=Update&itemId=@l.ItemId&count=@(l.Count + 1)">
+                                                            +
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </td>
-                                            <td class="text-end fw-semibold text-danger">
+
+                                            @* --- Cột THÀNH TIỀN --- *@
+                                            <td class="text-end">
                                                 @Model.ToCurrency(l.LineTotal)
                                             </td>
+
+                                            @* --- Cột THAO TÁC (Xóa) --- *@
                                             <td class="text-center">
-                                                <form method="post" asp-page-handler="Delete">
+                                                <form method="post">
                                                     @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="itemId" value="@l.ItemId" />
-                                                    <button class="btn btn-sm btn-danger">Xóa</button>
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-danger"
+                                                            formaction="/Cart/Index?handler=Delete&itemId=@l.ItemId">
+                                                        Xóa
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -107,7 +126,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT: mã giảm giá & tổng -->
+            <!-- RIGHT: tóm tắt thanh toán -->
             <div class="col-12 col-lg-4">
                 <div class="card shadow-sm">
                     <div class="card-header bg-white fw-semibold">
@@ -123,11 +142,11 @@
                             <span>Tổng cộng:</span>
                             <span>@Model.ToCurrency(Model.GrandTotal)</span>
                         </div>
-                        <form method="post" asp-page-handler="Checkout">
-                            <button type="submit" class="btn btn-primary w-100">
-                                Tiến hành thanh toán
-                            </button>
-                        </form>
+                        
+                        <!-- Nút chuyển sang trang thanh toán -->
+                        <a href="/Cart/Checkout" class="btn btn-primary w-100">
+                            Tiến hành thanh toán
+                        </a>
                     </div>
                 </div>
             </div>

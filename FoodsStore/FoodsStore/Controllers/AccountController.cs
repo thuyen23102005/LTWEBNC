@@ -85,10 +85,12 @@ namespace FoodsStore.Controllers
         }
 
         // ---------------- LOGOUT -------------------
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", "Account");
         }
 
         // ---------------- ACCESS DENIED -------------------
@@ -104,17 +106,30 @@ namespace FoodsStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                var result = await _signInManager.PasswordSignInAsync(
+                    model.UserName,
+                    model.PasswordUser,
+                    model.RememberMe,
+                    lockoutOnFailure: false
+                );
 
-                if (await _userManager.IsInRoleAsync(user, "Admin"))
+                if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+
+                    // Nếu là Admin → chuyển đến Admin Area
                     if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
                         return RedirectToAction("Index", "Items", new { area = "Admin" });
+                    }
+
+                    // Nếu là Customer → về trang chủ
+                    return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", "Home");
+
+                ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             }
 
-            ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             return View(model);
         }
     }

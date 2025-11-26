@@ -198,12 +198,24 @@
                     @Html.ValidationMessageFor(m => m.PasswordUser, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="remember-forgot">
-                    <label><input type="checkbox" /> Nhớ tài khoản</label>
-                    <a href="#">Quên mật khẩu?</a>
+                <div class="form-check mt-2 mb-3" style="margin-top: -4px;">
+                    <input asp-for="RememberMe" class="form-check-input" id="rememberMe" />
+                    <label asp-for="RememberMe"
+                           class="form-check-label text-white"
+                           for="rememberMe">
+                        Ghi nhớ đăng nhập
+                    </label>
                 </div>
 
                 <button type="submit">Đăng nhập</button>
+
+                <div class="text-center mt-2">
+                    <a href="/Home/Index"
+                       class="btn btn-outline-light px-4"
+                       style="border-radius: 20px;">
+                        Tiếp tục với Guest
+                    </a>
+                </div>
 
                 <div>
                     @if (ViewBag.Error != null)
