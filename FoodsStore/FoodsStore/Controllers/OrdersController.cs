@@ -14,6 +14,7 @@ namespace FoodsStore.Controllers
             _context = context;
         }
 
+        // Danh sách đơn hàng (có phân trang)
         public IActionResult Index(int page = 1)
         {
             int pageSize = 10; // số đơn hàng mỗi trang
@@ -36,6 +37,7 @@ namespace FoodsStore.Controllers
             return View(orders);
         }
 
+        // Chi tiết đơn hàng
         public IActionResult Details(int id)
         {
             // Lấy header của đơn + thông tin user
@@ -71,6 +73,36 @@ namespace FoodsStore.Controllers
             ViewBag.OrderDetails = details;
 
             return View(order);
+        }
+
+        // Xóa đơn hàng
+        public IActionResult Delete(int id)
+        {
+            // Lấy header
+            var order = _context.OrderHeaders
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            // Lấy toàn bộ chi tiết đơn liên quan
+            var details = _context.OrderDetails
+                .Where(d => d.OrderHeaderId == id)
+                .ToList();
+
+            // Xóa chi tiết trước (tránh lỗi khóa ngoại)
+            _context.OrderDetails.RemoveRange(details);
+
+            // Xóa header
+            _context.OrderHeaders.Remove(order);
+
+            _context.SaveChanges();
+
+            TempData["Success"] = $"Đã xóa đơn hàng #{id}.";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

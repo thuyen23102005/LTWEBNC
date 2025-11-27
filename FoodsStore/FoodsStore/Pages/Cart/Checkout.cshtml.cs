@@ -71,6 +71,7 @@ namespace FoodsStore.Pages.Cart
                     {
                         ItemId = c.ItemId,
                         Title = c.Item.Title,
+                        Description = c.Item.Description,
                         Price = c.Item.Price,
                         Count = c.Count,
                         ImageUrl = c.Item.ImageUrl
@@ -91,6 +92,11 @@ namespace FoodsStore.Pages.Cart
         // ====== GET: /Cart/Checkout ======
         public async Task<IActionResult> OnGetAsync()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Account/Login?returnUrl=/Cart/Checkout");
+            }
+
             await LoadCartAsync();
 
             if (Lines == null || !Lines.Any())
@@ -127,6 +133,11 @@ namespace FoodsStore.Pages.Cart
         // ====== POST: /Cart/Checkout ======
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Account/Login?returnUrl=/Cart/Checkout");
+            }
+
             await LoadCartAsync();
 
             if (Lines == null || !Lines.Any())
@@ -163,6 +174,8 @@ namespace FoodsStore.Pages.Cart
                 {
                     OrderHeaderId = header.Id,
                     ItemId = l.ItemId,
+                    Name = l.Title,
+                    Description = l.Description,
                     Count = l.Count,
                     Price = l.Price
                 };

@@ -1,24 +1,53 @@
 ﻿@page
-@model Microsoft.AspNetCore.Mvc.RazorPages.PageModel
+@model FoodsStore.Pages.Cart.SuccessModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Thanh toán thành công";
 }
 
-<div class="container my-5 text-center">
-    <h2 class="fw-semibold mb-3">🎉 Thanh toán thành công!</h2>
-    <p class="text-muted mb-4">
-        Cảm ơn bạn đã mua hàng. Đơn của bạn đang được xử lý.
-    </p>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
 
-    @if (TempData["Toast"] is string msg)
-    {
-        <div class="alert alert-success d-inline-block px-4 py-2" role="alert">
-            @msg
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body text-center p-5 position-relative">
+
+                    <!-- Icon tròn đặt giữa -->
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="rounded-circle bg-success bg-opacity-10 d-flex justify-content-center align-items-center"
+                             style="width: 90px; height: 90px;">
+                            <span class="fs-1 text-success">✔</span>
+                        </div>
+                    </div>
+
+                    <!-- Tiêu đề -->
+                    <h2 class="fw-bold mb-3 text-center d-flex justify-content-center align-items-center gap-2" style="white-space: nowrap;">
+                        <span>🎉</span>
+                        <span>Thanh toán thành công!</span>
+                    </h2>
+
+                    <!-- Nội dung -->
+                    <p class="text-muted mb-4 fs-5">
+                        Cảm ơn bạn đã mua hàng.<br />
+                        Mã đơn của bạn là <strong>#@Model.OrderId</strong>.<br />
+                        Đơn hàng đang được xử lý.
+                    </p>
+
+                    <!-- Nút hành động -->
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+
+                        <a href="/" class="btn btn-outline-primary px-4 py-2 rounded-3">
+                            ⬅️ Tiếp tục mua sắm
+                        </a>
+
+                        <a href="/Cart" class="btn btn-primary px-4 py-2 rounded-3">
+                            🛒 Xem giỏ hàng
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
-    }
-
-    <div class="mt-4">
-        <a asp-page="/Items/Index" class="btn btn-outline-primary me-2">Tiếp tục mua sắm</a>
-        <a asp-page="/Cart/Index" class="btn btn-link">Xem giỏ hàng</a>
     </div>
 </div>

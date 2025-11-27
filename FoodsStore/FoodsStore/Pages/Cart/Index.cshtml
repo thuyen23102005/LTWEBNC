@@ -144,9 +144,20 @@
                         </div>
                         
                         <!-- Nút chuyển sang trang thanh toán -->
-                        <a href="/Cart/Checkout" class="btn btn-primary w-100">
-                            Tiến hành thanh toán
-                        </a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <!-- ĐÃ ĐĂNG NHẬP: cho đi checkout -->
+                            <a href="/Cart/Checkout" class="btn btn-primary w-100">
+                                Tiến hành thanh toán
+                            </a>
+                        }
+                        else
+                        {
+                            <!-- CHƯA ĐĂNG NHẬP: bắt đăng nhập trước -->
+                            <a href="/Account/Login?returnUrl=/Cart/Checkout" class="btn btn-primary w-100">
+                                Đăng nhập để thanh toán
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
