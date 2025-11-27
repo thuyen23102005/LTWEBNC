@@ -1,5 +1,8 @@
 ﻿using FoodsStore.Models;
+using FoodsStore.Models.ViewModels;
 using FoodsStore.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +11,12 @@ namespace FoodsStore.Controllers
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // Danh sách đơn hàng (có phân trang)
@@ -35,6 +40,40 @@ namespace FoodsStore.Controllers
             ViewBag.CurrentPage = page;
 
             return View(orders);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UserDetails(int id)
+        {
+            // Lấy order
+            var order = await _context.OrderHeaders
+                .Include(o => o.ApplicationUser)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+                return NotFound();
+
+            // Không phải admin thì chỉ xem đơn của chính mình
+            if (!User.IsInRole("Admin"))
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser == null || order.ApplicationUserId != currentUser.Id)
+                    return Forbid();
+            }
+
+            var details = await _context.OrderDetails
+                .Include(d => d.Item)
+                .Where(d => d.OrderHeaderId == id)
+                .ToListAsync();
+
+            var vm = new OrderDetailsVM
+            {
+                OrderHeader = order,
+                OrderDetails = details
+            };
+
+            // Trả về partial để hiển thị trong popup (không dùng layout admin)
+            return PartialView("_UserOrderDetails", vm);
         }
 
         // Chi tiết đơn hàng
