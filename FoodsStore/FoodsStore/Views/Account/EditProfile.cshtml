@@ -1,0 +1,30 @@
+﻿@model ApplicationUser
+
+<div class="container my-4">
+    <h3>Cập nhật thông tin</h3>
+
+    <form method="post">
+        <div class="mb-3">
+            <label>Họ tên</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Địa chỉ</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Thành phố</label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Mã bưu điện</label>
+            <input asp-for="PostalCode" class="form-control" />
+        </div>
+
+        <button class="btn btn-success">Lưu thay đổi</button>
+        <a asp-action="Profile" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

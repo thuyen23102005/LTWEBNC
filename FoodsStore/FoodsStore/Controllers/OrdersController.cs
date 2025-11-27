@@ -38,6 +38,7 @@ namespace FoodsStore.Controllers
 
         public IActionResult Details(int id)
         {
+            // Lấy header của đơn + thông tin user
             var order = _context.OrderHeaders
                 .Include(o => o.ApplicationUser)
                 .FirstOrDefault(o => o.Id == id);
@@ -45,11 +46,28 @@ namespace FoodsStore.Controllers
             if (order == null)
                 return NotFound();
 
+            // --- BẢO VỆ ĐƠN HÀNG ---
+            // Nếu user không phải admin thì chỉ được xem đơn của chính mình
+            if (!User.IsInRole("Admin"))
+            {
+                // Lấy id user đang đăng nhập
+                var currentUserId = _context.Users
+                    .FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+
+                if (currentUserId == null || order.ApplicationUserId != currentUserId)
+                {
+                    return Forbid(); // chặn truy cập
+                }
+            }
+            // ------------------------
+
+            // Load OrderDetails
             var details = _context.OrderDetails
                 .Include(d => d.Item)
                 .Where(d => d.OrderHeaderId == id)
                 .ToList();
 
+            // Truyền details sang view
             ViewBag.OrderDetails = details;
 
             return View(order);

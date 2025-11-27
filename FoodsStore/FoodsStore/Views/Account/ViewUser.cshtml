@@ -1,0 +1,67 @@
+﻿@model FoodsStore.Models.ViewModels.UserProfileVM
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container my-4">
+
+    <a asp-controller="Account"
+       asp-action="Manage"
+       class="btn btn-secondary mb-3">
+        ← Quay lại danh sách
+    </a>
+
+    <h3 class="fw-semibold mb-4">Thông tin người dùng</h3>
+
+    <div class="card mb-4">
+        <div class="card-header">Thông tin cá nhân</div>
+        <div class="card-body">
+            <p><strong>Họ tên:</strong> @Model.User.Name</p>
+            <p><strong>Email:</strong> @Model.User.Email</p>
+            <p><strong>Địa chỉ:</strong> @Model.User.Address</p>
+            <p><strong>Thành phố:</strong> @Model.User.City</p>
+            <p><strong>Mã bưu điện:</strong> @Model.User.PostalCode</p>
+        </div>
+    </div>
+
+    <h4 class="fw-semibold">Lịch sử mua hàng</h4>
+
+    @if (Model.Orders.Count == 0)
+    {
+        <p>Người này chưa có đơn hàng.</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Model.Orders)
+                {
+                    <tr>
+                        <td>@o.Id</td>
+                        <td>@o.OrderDate.ToShortDateString()</td>
+                        <td>@o.OrderTotal.ToString("N0") đ</td>
+                        <td>@o.OrderStatus</td>
+                        <td>
+                            <a asp-controller="Orders"
+                               asp-action="Details"
+                               asp-route-id="@o.Id"
+                               class="btn btn-sm btn-info">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

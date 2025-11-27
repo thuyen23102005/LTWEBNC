@@ -279,8 +279,7 @@
 
                         <!-- Giỏ hàng: luôn có, giống nút vàng -->
                         <li class="nav-item">
-                            <a class="btn btn-nav btn-cart d-flex align-items-center"
-                               asp-page="/Cart/Index">
+                            <a class="btn btn-nav btn-cart d-flex align-items-center" asp-page="/Cart/Index">
                                 <i class="bi bi-cart3 me-2"></i>
                                 Giỏ Hàng (@cartCount)
                             </a>
@@ -290,7 +289,9 @@
                         {
                             <!-- Nút tên user (trắng viền xanh) -->
                             <li class="nav-item ms-2">
-                                <div class="btn btn-user">@User.Identity.Name</div>
+                                <a class="btn btn-user" asp-controller="Account" asp-action="Profile"> 
+                                    @User.Identity.Name 
+                                </a>
                             </li>
 
                             <!-- Đăng xuất: nút đỏ, submit form POST -->

@@ -1,0 +1,55 @@
+﻿@model FoodsStore.Models.ViewModels.UserProfileVM
+
+<div class="container my-4">
+    <h3 class="fw-semibold mb-4">Thông Tin Người Dùng</h3>
+
+    <div class="card mb-4">
+        <div class="card-header">Thông Tin Cá Nhân</div>
+        <div class="card-body">
+            <p><strong>Họ tên:</strong> @Model.User.Name</p>
+            <p><strong>Email:</strong> @Model.User.Email</p>
+            <p><strong>Địa chỉ:</strong> @Model.User.Address</p>
+            <p><strong>Thành phố:</strong> @Model.User.City</p>
+            <p><strong>Mã bưu điện:</strong> @Model.User.PostalCode</p>
+
+            <a asp-action="EditProfile" class="btn btn-primary">Chỉnh sửa thông tin</a>
+        </div>
+    </div>
+
+    <h4 class="fw-semibold">Lịch Sử Mua Hàng</h4>
+
+    @if (Model.Orders.Count == 0)
+    {
+        <p>Bạn chưa có đơn hàng nào.</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.OrderDate.ToShortDateString()</td>
+                        <td>@order.OrderTotal.ToString("N0") đ</td>
+                        <td>@order.OrderStatus</td>
+                        <td>
+                            <a asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-info">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

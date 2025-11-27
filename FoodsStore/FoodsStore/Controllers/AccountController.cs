@@ -1,7 +1,10 @@
 ﻿using FoodsStore.Models;
+using FoodsStore.Models.ViewModels;
+using FoodsStore.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodsStore.Controllers
 {
@@ -9,12 +12,14 @@ namespace FoodsStore.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _db;
 
         // Inject UserManager và SignInManager (ASP.NET Identity)
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
         {
             _userManager = userManager;
-            _signInManager = signInManager;           
+            _signInManager = signInManager;
+            _db = db;
         }
 
         // ---------------- REGISTER -------------------
@@ -129,8 +134,105 @@ namespace FoodsStore.Controllers
 
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             }
+            return View(model);
+        }
+
+        // ----------------- MANAGE USER PROFILE --------------------
+        [Authorize(Roles = "Admin")]
+        public IActionResult Manage(string? search)
+        {
+            // Query tất cả user
+            var usersQuery = _userManager.Users.AsQueryable();
+
+            // Nếu có từ khoá => lọc
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var keyword = search.Trim().ToLower();
+
+                usersQuery = usersQuery.Where(u =>
+                    (!string.IsNullOrEmpty(u.Name) && u.Name.ToLower().Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.UserName) && u.UserName.ToLower().Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.Email) && u.Email.ToLower().Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.City) && u.City.ToLower().Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.Address) && u.Address.ToLower().Contains(keyword))
+                );
+            }
+
+            // Danh sách sau khi lọc
+            var users = usersQuery.ToList();
+
+            // Tổng user thật trong hệ thống (không theo filter)
+            ViewBag.TotalUsers = _userManager.Users.Count();
+            ViewBag.Search = search;
+
+            return View(users);
+        }
+
+        // ----------------- VIEW USER PROFILE --------------------
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ViewUser(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var orders = await _db.OrderHeaders
+                .Where(o => o.ApplicationUserId == id)
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+
+            var vm = new UserProfileVM
+            {
+                User = user,
+                Orders = orders
+            };
+
+            return View(vm);
+        }
+
+        // ----------------- USER PROFILE --------------------
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login");
+
+            var orders = await _db.OrderHeaders
+                .Where(o => o.ApplicationUserId == user.Id)
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+
+            var model = new UserProfileVM
+            {
+                User = user,
+                Orders = orders
+            };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(ApplicationUser model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            user.Name = model.Name;
+            user.Address = model.Address;
+            user.City = model.City;
+            user.PostalCode = model.PostalCode;
+
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("Profile");
         }
     }
 }
