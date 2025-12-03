@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Đăng ký";
-    // 1. GỠ BỎ LAYOUT
     Layout = null;
 }
 
@@ -25,14 +24,13 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* 2. ĐÃ SỬA CSS HÌNH NỀN */
         html, body {
             height: 100%;
         }
 
         body {
-            background-image: url('/images/Br.jpg'); /* Đường dẫn đúng */
-            background-attachment: fixed; /* Cố định hình nền */
+            background-image: url('/images/Br.jpg'); 
+            background-attachment: fixed; 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -43,15 +41,13 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            min-height: 100vh; /* Đổi sang min-height */
+            min-height: 100vh;
             padding: 20px;
         }
 
         .register-box {
             position: relative;
             width: 400px;
-            /* Bỏ height cố định để form tự dãn ra khi có lỗi validation */
-            /* height: 550px; */
             background: transparent;
             border: 2px solid rgba(255, 255, 255, .5);
             border-radius: 20px;
@@ -59,7 +55,7 @@
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(15px);
-            padding: 20px 30px; /* Thêm padding cho đẹp */
+            padding: 20px 30px;
         }
 
         h2 {
@@ -140,12 +136,12 @@
                     text-decoration: underline;
                 }
 
-        /* CSS cho thông báo lỗi */
+        
         .text-danger {
-            color: #ffcccc; /* Màu đỏ nhạt dễ đọc */
+            color: #ffcccc; 
             font-size: 0.9em;
             padding-top: 5px;
-            display: block; /* Để nó rớt xuống hàng */
+            display: block; 
         }
 
     </style>

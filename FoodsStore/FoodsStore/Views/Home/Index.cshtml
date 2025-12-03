@@ -6,7 +6,7 @@
     var currentPage = Model.CurrentPage;
     var totalPages = Model.TotalPages;
     var currentCategory = Model.CurrentCategory;
-    var currentSearchTerm = Model.CurrentSearchTerm; // Lấy từ khóa tìm kiếm
+    var currentSearchTerm = Model.CurrentSearchTerm;
     var allCategories = Model.AllCategories;
 }
 
@@ -37,13 +37,6 @@
                    value="@currentSearchTerm" />
 
             <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-
-            @if (!string.IsNullOrWhiteSpace(currentSearchTerm))
-            {
-                <a asp-controller="Food" asp-action="Index"
-                   asp-route-category="@currentCategory"
-                   class="btn btn-outline-danger ms-2">Xóa tìm kiếm</a>
-            }
         </form>
     </div>
 </div>

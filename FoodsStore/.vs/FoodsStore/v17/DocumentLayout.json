@@ -3,40 +3,24 @@
   "WorkspaceRootPath": "D:\\Git Code\\LTWEBNC\\FoodsStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\views\\orders\\_userorderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\views\\orders\\_userorderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\models\\viewmodels\\orderdetailsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\models\\viewmodels\\orderdetailsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\views\\orders\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\views\\orders\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\pages\\cart\\success.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\pages\\cart\\success.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\pages\\cart\\success.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\pages\\cart\\success.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\pages\\cart\\checkout.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\pages\\cart\\checkout.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\models\\orderdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\models\\orderdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|d:\\git code\\ltwebnc\\foodsstore\\foodsstore\\pages\\cart\\checkout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EEC079E6-208A-45C6-9A4F-25DA52AE2472}|FoodsStore\\FoodsStore.csproj|solutionrelative:foodsstore\\pages\\cart\\checkout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -51,116 +35,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Profile.cshtml",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Account\\Profile.cshtml",
-              "RelativeDocumentMoniker": "FoodsStore\\Views\\Account\\Profile.cshtml",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Account\\Profile.cshtml",
-              "RelativeToolTip": "FoodsStore\\Views\\Account\\Profile.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwGoAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T14:01:37.839Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_UserOrderDetails.cshtml",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Orders\\_UserOrderDetails.cshtml",
-              "RelativeDocumentMoniker": "FoodsStore\\Views\\Orders\\_UserOrderDetails.cshtml",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Orders\\_UserOrderDetails.cshtml",
-              "RelativeToolTip": "FoodsStore\\Views\\Orders\\_UserOrderDetails.cshtml",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAwwCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T14:01:22.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "OrdersController.cs",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\OrdersController.cs",
-              "RelativeDocumentMoniker": "FoodsStore\\Controllers\\OrdersController.cs",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\OrdersController.cs",
-              "RelativeToolTip": "FoodsStore\\Controllers\\OrdersController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAuwEwAAAAJAAAAAAAAAA==",
+              "Title": "ItemsController.cs",
+              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\ItemsController.cs",
+              "RelativeDocumentMoniker": "FoodsStore\\Controllers\\ItemsController.cs",
+              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\ItemsController.cs",
+              "RelativeToolTip": "FoodsStore\\Controllers\\ItemsController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAEkAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:59:02.846Z",
+              "WhenOpened": "2025-12-02T05:35:28.386Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "OrderDetailsVM.cs",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Models\\ViewModels\\OrderDetailsVM.cs",
-              "RelativeDocumentMoniker": "FoodsStore\\Models\\ViewModels\\OrderDetailsVM.cs",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Models\\ViewModels\\OrderDetailsVM.cs",
-              "RelativeToolTip": "FoodsStore\\Models\\ViewModels\\OrderDetailsVM.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "FoodsStore\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "FoodsStore\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAACcAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T14:01:14.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "FoodsStore\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "FoodsStore\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:58:39.456Z",
+              "WhenOpened": "2025-12-01T14:00:51.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "FoodsStore\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "FoodsStore\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAAAEMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-01T13:51:15.717Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Orders\\Details.cshtml",
-              "RelativeDocumentMoniker": "FoodsStore\\Views\\Orders\\Details.cshtml",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Views\\Orders\\Details.cshtml",
-              "RelativeToolTip": "FoodsStore\\Views\\Orders\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAARAAAAAAAAAA==",
+              "Title": "Checkout.cshtml",
+              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Checkout.cshtml",
+              "RelativeDocumentMoniker": "FoodsStore\\Pages\\Cart\\Checkout.cshtml",
+              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Checkout.cshtml",
+              "RelativeToolTip": "FoodsStore\\Pages\\Cart\\Checkout.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T11:44:31.553Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Success.cshtml.cs",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Success.cshtml.cs",
-              "RelativeDocumentMoniker": "FoodsStore\\Pages\\Cart\\Success.cshtml.cs",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Success.cshtml.cs",
-              "RelativeToolTip": "FoodsStore\\Pages\\Cart\\Success.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:02:34.867Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Success.cshtml",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Success.cshtml",
-              "RelativeDocumentMoniker": "FoodsStore\\Pages\\Cart\\Success.cshtml",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Success.cshtml",
-              "RelativeToolTip": "FoodsStore\\Pages\\Cart\\Success.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABoAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T11:01:53.361Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "OrderDetails.cs",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Models\\OrderDetails.cs",
-              "RelativeDocumentMoniker": "FoodsStore\\Models\\OrderDetails.cs",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Models\\OrderDetails.cs",
-              "RelativeToolTip": "FoodsStore\\Models\\OrderDetails.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T10:47:02.116Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Checkout.cshtml.cs",
-              "DocumentMoniker": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Checkout.cshtml.cs",
-              "RelativeDocumentMoniker": "FoodsStore\\Pages\\Cart\\Checkout.cshtml.cs",
-              "ToolTip": "D:\\Git Code\\LTWEBNC\\FoodsStore\\FoodsStore\\Pages\\Cart\\Checkout.cshtml.cs",
-              "RelativeToolTip": "FoodsStore\\Pages\\Cart\\Checkout.cshtml.cs",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAMwEkAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T06:17:09.211Z"
+              "WhenOpened": "2025-12-01T13:25:41.277Z"
             }
           ]
         }

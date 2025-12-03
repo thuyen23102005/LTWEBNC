@@ -1,7 +1,6 @@
 ﻿@model FoodsStore.Models.Login
 @{
-    ViewBag.Title = "Đăng nhập";
-    // 1. GỠ BỎ LAYOUT
+    ViewBag.Title = "Đăng nhập";   
     Layout = null;
 }
 
@@ -22,35 +21,31 @@
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* 3. CHỈNH CSS BACKGROUND */
+        
         html, body {
             height: 100%;
             font-family: 'Poppins', sans-serif;
         }
 
         body {
-            /* Đặt hình nền cho body */
-            background-image: url('/images/Br.jpg');
-            /* Yêu cầu của bạn: Background cố định */
+            
+            background-image: url('/images/Br.jpg');          
             background-attachment: fixed;
-            /* Các thuộc tính khác để hình nền full và đẹp */
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
 
-        /* Section bây giờ chỉ làm nhiệm vụ căn giữa */
+        
         section {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            min-height: 100vh; /* Chiếm tối thiểu 100% chiều cao */
-            padding: 20px; /* Thêm padding cho an toàn */
+            min-height: 100vh; 
+            padding: 20px; 
         }
 
-        /* CSS cho form đăng nhập (giữ nguyên như cũ) */
         .login-box {
             position: relative;
             width: 400px;

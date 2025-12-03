@@ -33,11 +33,16 @@ namespace FoodsStore.Controllers
         [HttpPost]
         public IActionResult Create(CategoryViewModel vm)
         {
-            Category model = new Category();
-            model.Title = vm.Title;
-            _context.Categories.Add(model);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Category model = new Category();
+                model.Title = vm.Title;
+                _context.Categories.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(vm);
         }
         [HttpGet]
         public IActionResult Edit(int id)

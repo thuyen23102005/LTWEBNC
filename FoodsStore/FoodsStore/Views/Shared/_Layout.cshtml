@@ -31,7 +31,6 @@
                 flex: 1;
             }
 
-        /* Header (Giữ màu Xanh Lục Bảo Đậm và Fixed) */
         .navbar {
             background-color: #3C6E71;
         }
@@ -68,29 +67,29 @@
         /* Đăng ký: xanh lá */
         .btn-register {
             background-color: #00C853;
-            color: #000 !important; /* chữ đen */
+            color: #000 !important; 
         }
 
             .btn-register:hover {
                 background-color: #00A846;
-                color: #fff !important; /* hover chữ trắng */
+                color: #fff !important; 
             }
 
         /* Đăng nhập: xanh dương ngọc */
         .btn-login {
             background-color: #00E5FF;
-            color: #000 !important; /* chữ đen */
+            color: #000 !important; 
         }
 
             .btn-login:hover {
                 background-color: #00C4E4;
-                color: #fff !important; /* hover chữ trắng */
+                color: #fff !important; 
             }
 
         /* Nút hiển thị tên user */
         .btn-user {
             background-color: #FFFFFF;
-            color: #3C6E71; /* xanh lục bảo */
+            color: #3C6E71; 
             border: 2px solid #3C6E71;
             border-radius: 8px;
             padding: 6px 16px;
@@ -121,12 +120,12 @@
                 color: #FFFFFF;
             }
 
-        /* Khung lớn chứa nội dung (Container) - Viền nhẹ */
+        /* Khung lớn chứa nội dung (Container) */
         .container {
             background-color: white;
             padding: 30px;
             border-radius: 12px;
-            border: 2px solid #E0E0E0; /* Viền Xám Trắng nhẹ */
+            border: 2px solid #E0E0E0; 
             box-shadow: 0 4px 12px rgba(40, 44, 52, 0.03);
         }
 
@@ -156,17 +155,16 @@
         /* Thẻ thức ăn (Card) - Viền nhẹ */
         .card {
             background-color: white;
-            border: 2px solid #E0E0E0; /* Viền Xám Trắng nhẹ */
+            border: 2px solid #E0E0E0; 
             box-shadow: 0 4px 8px rgba(40, 44, 52, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 12px;
-            /* Đảm bảo các card trong 1 hàng có cùng chiều cao */
+            border-radius: 12px;          
             height: 100%;
         }
 
             .card:hover {
                 transform: translateY(-5px);
-                border-color: #FF8A00; /* Viền Cam Rực Rỡ khi hover */
+                border-color: #FF8A00;
                 box-shadow: 0 8px 16px rgba(255, 138, 0, 0.2);
             }
 
@@ -175,39 +173,32 @@
             object-fit: cover;
             border-top-left-radius: 9px;
             border-top-right-radius: 9px;
-            border-bottom: 2px solid #FF8A00; /* Đường phân cách Cam Rực Rỡ */
+            border-bottom: 2px solid #FF8A00;
         }
 
-        /* --- CSS SỬA LỖI LỆCH CARD --- */
-        .card-body {
-            /* Dùng Flexbox để căn chỉnh nội dung */
+        .card-body {           
             display: flex;
-            flex-direction: column;
-            /* Chiều cao tối thiểu cho thân thẻ (bao gồm tiêu đề, mô tả, nút) */
+            flex-direction: column;           
             min-height: 200px;
         }
 
         .card-title {
-            flex-grow: 0; /* Tiêu đề không co giãn */
+            flex-grow: 0; 
         }
 
         .card-text {
-            flex-grow: 1; /* Mô tả co giãn để lấp đầy không gian trống */
-            overflow: hidden;
-            /* Giới hạn nội dung tối đa 3 dòng và hiển thị dấu '...' */
+            flex-grow: 1; 
+            overflow: hidden;          
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
             margin-bottom: 10px;
         }
-
-        /* Đẩy nút xuống dưới cùng của thẻ */
+      
         .card-body .btn-success {
             margin-top: auto;
         }
-        /* --- KẾT THÚC CSS SỬA LỖI LỆCH CARD --- */
-
 
         /* CSS cho Slideshow Banner */
         .banner-slideshow-container {
@@ -222,8 +213,8 @@
         }
 
         .banner-box {
-            background-color: #A9ECCE; /* Màu mint nhạt cho banner */
-            border: 2px dashed #FF8A00; /* Viền Cam */
+            background-color: #A9ECCE; 
+            border: 2px dashed #FF8A00;
             border-radius: 12px;
             padding: 2rem;
             margin: 0;
@@ -238,7 +229,6 @@
             animation-duration: 1.5s;
         }
 
-        /* SỬA LỖI CÚ PHÁP RAZOR (Dùng @@keyframes) */
         @@keyframes fade {
             from {
                 opacity: .4
@@ -268,9 +258,6 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
 

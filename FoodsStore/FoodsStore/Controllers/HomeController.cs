@@ -21,7 +21,7 @@ public class HomeController : Controller
 
     public IActionResult Index(int pageIndex = 1, string category = "All", string searchTerm = "")
     {
-        const int pageSize = 9;
+        const int pageSize = 12;
 
         // Lấy query Item từ DB
         var query = _context.Items
@@ -45,7 +45,7 @@ public class HomeController : Controller
         var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
         var itemsOnPage = query
-            .OrderBy(x => x.Title) // hoặc Id
+            .OrderBy(x => x.Title)
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
             .ToList();

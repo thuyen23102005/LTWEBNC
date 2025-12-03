@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Quản lý người dùng";
-    // dùng layout admin cho giống trang quản lý sản phẩm
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
     var totalUsers = ViewBag.TotalUsers as int? ?? Model.Count();

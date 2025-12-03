@@ -41,7 +41,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th style="width:40px;">
-                                            <input class="form-check-input" type="checkbox" disabled />
+                                            <input class="form-check-input" type="checkbox" id="masterCheckbox" checked />
                                         </th>
                                         <th>Sản Phẩm</th>
                                         <th class="text-end">Đơn Giá</th>
@@ -55,7 +55,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                <input class="form-check-input" type="checkbox" checked />
+                                                <input class="form-check-input item-checkbox" type="checkbox" checked value="@l.ItemId" data-price="@l.LineTotal" />
                                             </td>
 
                                             <td class="d-flex align-items-center gap-3">
@@ -140,14 +140,14 @@
                         <hr />
                         <div class="d-flex justify-content-between fs-5 fw-bold text-danger mb-3">
                             <span>Tổng cộng:</span>
-                            <span>@Model.ToCurrency(Model.GrandTotal)</span>
+                            <span id="displayTotal">@Model.ToCurrency(Model.GrandTotal)</span>
                         </div>
                         
                         <!-- Nút chuyển sang trang thanh toán -->
                         @if (User.Identity.IsAuthenticated)
                         {
                             <!-- ĐÃ ĐĂNG NHẬP: cho đi checkout -->
-                            <a href="/Cart/Checkout" class="btn btn-primary w-100">
+                            <a href="#" onclick="goToCheckout(event)" class="btn btn-primary w-100">
                                 Tiến hành thanh toán
                             </a>
                         }
@@ -164,3 +164,80 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const masterCheckbox = document.getElementById("masterCheckbox");
+            const itemCheckboxes = document.querySelectorAll(".item-checkbox");
+            const displayTotal = document.getElementById("displayTotal");
+
+            // Hàm định dạng tiền tệ VNĐ
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+
+            // 1. Hàm tính lại tổng tiền
+            function updateTotalPrice() {
+                let total = 0;
+                itemCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        // Lấy giá trị từ data-price mà ta đã gán ở Bước 1
+                        total += parseFloat(checkbox.getAttribute("data-price"));
+                    }
+                });
+                displayTotal.textContent = formatter.format(total);
+            }
+
+            // 2. Hàm kiểm tra trạng thái Master Checkbox
+            function updateMasterCheckboxState() {
+                // Kiểm tra xem có bao nhiêu ô đang được check
+                const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+                masterCheckbox.checked = allChecked;
+            }
+
+            // --- GÁN SỰ KIỆN ---
+
+            // A. Khi bấm vào nút Master (Chọn tất cả)
+            masterCheckbox.addEventListener("change", function () {
+                const isChecked = this.checked;
+                itemCheckboxes.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                });
+                updateTotalPrice();
+            });
+
+            // B. Khi bấm vào từng nút con
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener("change", function () {
+                    updateTotalPrice();        // Tính lại tiền
+                    updateMasterCheckboxState(); // Kiểm tra để bật/tắt nút Master
+                });
+            });
+        });
+
+            // Chuyển hướng sang trang Checkout với các ID đã chọn
+        function goToCheckout(e) {
+            e.preventDefault();
+
+            // Lấy tất cả checkbox đang được tick
+            const selectedCheckboxes = document.querySelectorAll('.item-checkbox:checked');
+
+            if (selectedCheckboxes.length === 0) {
+                alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!");
+                return;
+            }
+
+            // Tạo URL có chứa tham số selectedIds
+            let url = "/Cart/Checkout?";
+            selectedCheckboxes.forEach((cb, index) => {
+                if (index > 0) url += "&";
+                url += `selectedIds=${cb.value}`;
+            });
+
+            // Chuyển trang
+            window.location.href = url;
+        }
+    </script>
+}

@@ -56,34 +56,48 @@ namespace FoodsStore.Pages.Cart
         public string ToCurrency(double value)
             => string.Format("{0:N0} đ", value);
 
+        // Để nhận danh sách ID từ URL và Form
+        [BindProperty(SupportsGet = true)]
+        public List<int> SelectedIds { get; set; } = new List<int>();
+
         // ====== Helpers ======
-        private async Task LoadCartAsync()
+        private async Task LoadCartAsync(List<int> filterIds)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            // Lấy dữ liệu
             if (!string.IsNullOrEmpty(userId))
             {
-                // giỏ của user đã đăng nhập (DB)
-                Lines = await _context.Carts
+                // 1. Khởi tạo query cơ bản
+                var query = _context.Carts
                     .Include(c => c.Item)
-                    .Where(c => c.ApplicationUserId == userId)
-                    .Select(c => new CartLineVM
-                    {
-                        ItemId = c.ItemId,
-                        Title = c.Item.Title,
-                        Description = c.Item.Description,
-                        Price = c.Item.Price,
-                        Count = c.Count,
-                        ImageUrl = c.Item.ImageUrl
-                    })
-                    .ToListAsync();
+                    .Where(c => c.ApplicationUserId == userId);
+
+                // 2. Áp dụng bộ lọc (nếu có chọn ID)
+                if (filterIds != null && filterIds.Any())
+                {
+                    query = query.Where(c => filterIds.Contains(c.ItemId));
+                }
+
+                // 3. Lấy dữ liệu từ biến 'query' đã lọc (SỬA Ở ĐÂY)
+                Lines = await query.Select(c => new CartLineVM
+                {
+                    ItemId = c.ItemId,
+                    Title = c.Item.Title,
+                    Description = c.Item.Description,
+                    Price = c.Item.Price,
+                    Count = c.Count,
+                    ImageUrl = c.Item.ImageUrl
+                }).ToListAsync();
             }
             else
             {
                 // giỏ guest (Session)
-                Lines = HttpContext.Session
-                            .GetJson<List<CartLineVM>>("cart_guest")
-                        ?? new List<CartLineVM>();
+                Lines = HttpContext.Session.GetJson<List<CartLineVM>>("cart_guest") ?? new List<CartLineVM>();
+                if (filterIds != null && filterIds.Any())
+                {
+                    Lines = Lines.Where(x => filterIds.Contains(x.ItemId)).ToList();
+                }
             }
 
             SubTotal = Lines.Sum(l => l.LineTotal);
@@ -97,7 +111,7 @@ namespace FoodsStore.Pages.Cart
                 return Redirect("/Account/Login?returnUrl=/Cart/Checkout");
             }
 
-            await LoadCartAsync();
+            await LoadCartAsync(SelectedIds);
 
             if (Lines == null || !Lines.Any())
                 return RedirectToPage("/Cart/Index");
@@ -138,7 +152,7 @@ namespace FoodsStore.Pages.Cart
                 return Redirect("/Account/Login?returnUrl=/Cart/Checkout");
             }
 
-            await LoadCartAsync();
+            await LoadCartAsync(SelectedIds);
 
             if (Lines == null || !Lines.Any())
                 return RedirectToPage("/Cart/Index");
@@ -184,15 +198,18 @@ namespace FoodsStore.Pages.Cart
 
             await _context.SaveChangesAsync();
 
-            // Xoá giỏ hàng sau khi đặt
+            // Xoá giỏ hàng sau khi đặt (CHỈ XÓA NHỮNG MÓN ĐÃ MUA)
             if (!string.IsNullOrEmpty(userId))
             {
-                var cartRows = _context.Carts.Where(c => c.ApplicationUserId == userId);
+                var cartRows = _context.Carts
+                    .Where(c => c.ApplicationUserId == userId && SelectedIds.Contains(c.ItemId)); // Thêm điều kiện này
+
                 _context.Carts.RemoveRange(cartRows);
                 await _context.SaveChangesAsync();
             }
             else
             {
+                // Với Session thì phức tạp hơn xíu, tạm thời xóa hết hoặc xử lý sau
                 HttpContext.Session.Remove("cart_guest");
             }
 

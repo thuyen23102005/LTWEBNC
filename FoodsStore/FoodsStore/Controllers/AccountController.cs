@@ -12,13 +12,15 @@ namespace FoodsStore.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
 
         // Inject UserManager và SignInManager (ASP.NET Identity)
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _db = db;
         }
 
@@ -40,7 +42,7 @@ namespace FoodsStore.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.UserName,
-                    Email = model.UserName,   // nếu UserName là email, giữ dòng này; nếu không thì bỏ
+                    Email = model.UserName,
                     Name = model.Name,
                     City = model.City,
                     Address = model.Address,
@@ -52,6 +54,13 @@ namespace FoodsStore.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Kiểm tra xem Role "Customer" đã có trong DB chưa
+                    if (!await _roleManager.RoleExistsAsync("Customer"))
+                    {
+                        // Nếu chưa có, tạo mới Role "Customer"
+                        await _roleManager.CreateAsync(new IdentityRole("Customer"));
+                    }
+
                     // Default role = Customer
                     await _userManager.AddToRoleAsync(user, "Customer");
 
@@ -226,6 +235,7 @@ namespace FoodsStore.Controllers
             var user = await _userManager.GetUserAsync(User);
 
             user.Name = model.Name;
+            user.Email = model.Email;
             user.Address = model.Address;
             user.City = model.City;
             user.PostalCode = model.PostalCode;
